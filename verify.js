@@ -12,11 +12,11 @@ function calculate(){
                 if(passwordCheck.test(password)){
                     window.alert('User Created');
                 }else{
-                    window.alert('Please enter a valid Username and Password');
+                    window.alert('Please make your password alphanumeric and between 6 and 100 characters inclusive.');
     
                 }
             }else{
-                window.alert('Please enter a valid Username and Password');
+                window.alert('Please make your username alphanumeric and between 6 and 100 characters inclusive.');
     
             }
         }else{
