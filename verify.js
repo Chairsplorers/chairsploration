@@ -1,5 +1,5 @@
 function calculate(){
-    var usernameCheck = /^[A-Za-z][0-9a-zA-Z]{5,99}$/;
+    var usernameCheck = /^[A-Za-z][0-9a-zA-Z]{0,99}$/;
     var passwordCheck = /^[A-Za-z][0-9a-zA-Z]{5,99}$/;
     var username = document.information.username.value;
     var password = document.information.pass.value;
@@ -16,7 +16,7 @@ function calculate(){
     
                 }
             }else{
-                window.alert('Please make your username alphanumeric and between 6 and 100 characters inclusive.');
+                window.alert('Please make your username alphanumeric and between 1 and 100 characters inclusive.');
     
             }
         }else{
@@ -39,6 +39,6 @@ function login(){
     if((password == 1) && (username == 1)){
         window.alert('logged in!');
     }else{
-        window.alert('Invalid Username or Password');
+        window.alert('Invalid Username or Password. (not working yet, user:1 pass:1 is the only valid input)');
     }
 }
