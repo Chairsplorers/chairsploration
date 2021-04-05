@@ -1,6 +1,6 @@
 function calculate(){
-    var usernameCheck = /^[A-Za-z][0-9a-zA-Z]{5,9}$/;
-    var passwordCheck = /(?=.*[A-Z])(?=.*\d)(?!.*[^a-zA-Z0-9]).{6,10}$/;
+    var usernameCheck = /^[A-Za-z][0-9a-zA-Z]{5,99}$/;
+    var passwordCheck = /^[A-Za-z][0-9a-zA-Z]{5,99}$/;
     var username = document.information.username.value;
     var password = document.information.pass.value;
     var repassword = document.information.repass.value;
