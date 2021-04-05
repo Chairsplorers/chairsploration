@@ -4,6 +4,7 @@
         <title>Chairsploration</title>
         <link rel="stylesheet" href="style.css">
         <link rel="icon" type="image/jpg" href="logo.jpg"/>
+		<script src="rating.js"></script>
     </head>
 
 
@@ -22,31 +23,31 @@
         <div class="navbar"> 
             <div class="dropdown">
                 <button class="dropbtn">
-                    <a href="./reviews.html">Reviews</a>
+                    <a href="#">Reviews</a>
                 </button>
                 <div class="dropdown-content">
-                    <a href="./reviews.html">Reviews</a>
-                    <a href="./videos.html">Videos</a>
+                    <a href="#">Reviews</a>
+                    <a href="#">Videos</a>
                 </div>
             </div>
             <div class="dropdown">
                 <button class="dropbtn">
-                    <a href="./superlatives.html">Superlatives</a>
+                    <a href="#">Superlatives</a>
                 </button>
                 <div class="dropdown-content">
-                    <a href="./art.html">Art</a>
-                    <a href="./bestbenches.html">Best Benches!</a>
-                    <a href="./leaderboard.html">Leaderboard</a>
+                    <a href="#">Art</a>
+                    <a href= "#">Best Benches!</a>
+                    <a href="#">Leaderboard</a>
                 </div>
             </div>
-            <a href="./chairmap.html">Chair Map</a>
+            <a href="#">Chair Map</a>
             <div class="dropdown">
                 <button class="dropbtn">
-                    <a href="./contact-us.html">About Us</a>
+                    <a href = "#">About Us</a>
                 </button>
                 <div class="dropdown-content">
-                    <a href='./contact-us.html'>Contact Us!</a>
-                    <a href='./site-updates.html'>Site Updates</a>
+                    <a href='contact-us.html'>Contact Us!</a>
+                    <a href='site-updates.html'>Site Updates</a>
                 </div>
             </div>
             <input type = "text" class = "input">
@@ -57,25 +58,38 @@
             <div class="dropdown">
                 <button class="dropbtn">
                     <div class="ham-image">
-                        <img src="./hamburger.png" alt="hamburger">
+                        <img src="hamburger.png" alt="hamburger">
                     </div>
                 </button>
                 <div class="dropdown-content">
-                    <a href="./login.html">Login</a>
-                    <a href="./newuser.html">New User</a>
+                    <a href="#">Login</a>
+                    <a href="#">New User</a>
                     <a href="#">Toggle Dark Theme</a>
-                    <a href="./settings.html">Settings</a>
+                    <a href="#">Settings</a>
                 </div>
             </div>
         </div>
 
-        <div>
-            <iframe width="420" height="345" src="https://www.youtube.com/watch?v=j8vXUhCTinw"></iframe>
-        </div>
-
+		<div class="content">
+			<div id="ratingbar" onmouseleave="resetRate()"  onclick="setRate()">
+				<img id="1" class = "star" onmouseover="changeRate(1)">
+				<img id="2" class = "star" onmouseover="changeRate(2)">
+				<img id="3" class = "star" onmouseover="changeRate(3)">
+				<img id="4" class = "star" onmouseover="changeRate(4)">
+				<img id="5" class = "star" onmouseover="changeRate(5)">
+				<img id="6" class = "star" onmouseover="changeRate(6)">
+				<img id="7" class = "star" onmouseover="changeRate(7)">
+				<img id="8" class = "star" onmouseover="changeRate(8)">
+				<img id="9" class = "star" onmouseover="changeRate(9)">
+				<img id="10" class = "star" onmouseover="changeRate(10)">
+				<k id="rating"></k>/10
+			</div>
+			
+			
+		</div>
 
         <div class="footer">
-            <p>&#169; Last updated 04/05/21 by the <a href="mailto:chairsplorers@chairschairschairs.com">Chairsplorers</a>.</p>
+            <p>&#169; Last updated 03/10/21 by the <a href="mailto:chairsplorers@chairschairschairs.com">Chairsplorers</a>.</p>
         </div>
 
     </body>
