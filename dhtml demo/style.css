@@ -1,0 +1,138 @@
+body {
+	margin: 0px;
+}
+
+.header {
+	background-color: #b0a1b9;
+	display: flex;
+	align-items: center;
+	font-family: "Times New Roman", serif;
+	font-size: 5em;
+}
+
+.header .image {
+	padding: 0.04em;
+	height: 1em;
+	min-height: 60px;
+}
+
+.header .text {
+	background-color: #b0a1b9;
+}
+
+.ham-image {
+    padding: 0.04em;
+	height: 1em;
+	align-items: right;
+    min-height: 60px;
+}
+
+img {
+	max-height: 100%;
+}
+
+.navbar {
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: #b0a1b9;
+}
+
+.navbar a {
+    flex: 1 1 auto;
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+    text-align: center;
+    padding: 14px 16px;
+}
+
+.dropdown {
+    flex: 1 1 auto;
+    overflow: hidden;
+}
+  
+.dropdown-r {
+    flex: 1 1 auto;
+}
+
+.dropdown .dropbtn {
+    font-size: 16px;  
+    border: none;
+    outline: none;
+    color: black;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
+  
+.navbar a:hover, .dropdown:hover .dropbtn:hover {
+    background-color: #5253c8;
+    color: #cdbbb6;
+}
+  
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #b0a1b9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+  
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+  
+.dropdown-content a:hover {
+    background-color: #5253c8;
+    color: #cdbbb6;
+}
+  
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.navbar .input{
+    flex: 0 1 auto;
+}
+
+.navbar .search{
+    flex: 0 1 auto;
+    background-color:#5253c8;
+    color:#cdbbb6;
+    margin: 10px;
+}
+
+.navbar .button{
+    flex: 0 1 auto;
+    background-color:#5253c8;
+    color:#cdbbb6;
+    margin: 10px
+}
+
+.content{
+    margin-right: 10vw;
+    margin-left: 10vw;
+}
+
+.footer{
+    margin: 0;
+    color: black;
+    font-size: 8pt;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+img.star{
+	width:50px;
+}
+
