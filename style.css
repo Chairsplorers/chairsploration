@@ -80,27 +80,9 @@ img {
     margin: auto;
 }
 
-*,
-*::after,
-*::before {
-  margin: 0;
-  padding: 0;
-  box-sizing: inherit; 
-}
 
-html {
-  box-sizing: border-box;
-  font-size: 62.5%; 
-}
 
-body {
-  font-family: "Nunito", sans-serif;
-  color: #333;
-  font-weight: 300;
-  line-height: 1.6; 
-}
-
-.container {
+.container-art {
   width: 60%;
   margin: 2rem auto; 
 }
