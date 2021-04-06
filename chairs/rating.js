@@ -10,7 +10,7 @@ function resetRate(){
 		for (i=1;i<=10;i++){
 			document.getElementById(i).src = emp;
 		}
-		document.getElementById("rating").innerHTML = "-";
+		document.getElementById("rating").innerHTML = "?";
 	}
 }
 
