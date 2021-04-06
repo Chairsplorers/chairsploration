@@ -80,7 +80,10 @@ img {
     margin: auto;
 }
 
-
+.container-art {
+  width: 60%;
+  margin: 2rem auto; 
+}
 .gallery {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
