@@ -4,6 +4,44 @@
         <title>Chairsploration</title>
         <link rel="stylesheet" href="style.css">
         <link rel="icon" type="image/jpg" href="logo.jpg"/>
+		
+		<style>
+			body {
+				background-color: #b0a1b9;
+			}
+		
+			div.newuser-info{
+				margin-top: 30px;
+				margin-bottom: 30px;
+				text-align: center;
+				background-color: #cdbbb6;
+				width: 30%;
+				margin-left: auto;
+				margin-right: auto;
+				padding: 20px;
+				border-style: solid;
+			}
+		
+			table{
+				margin-left: auto;
+				margin-right: auto;
+			}
+		
+			tr.spacing{
+				height: 10px;
+			}
+		
+			td {
+				font-family: "Times New Roman", serif;
+				font-size: 14pt;
+				position: center;
+				text-align: center;
+			}
+			
+			tiny {
+				font-size:8pt;
+			}
+		</style>
     </head>
 
 
@@ -88,20 +126,16 @@
                         <td>
                             <input type = 'password' name = 'pass'/>
                         </td>
-                    </tr>
-    
-
-                    <tr>
-                        <td>
-                            <input type = "button" class = 'button' value = 'Submit' onclick="login();"/>
-                        </td>
-                        <td>
-                            <input type = 'reset' value ='Clear'/>
-                        </td>
-                    </tr>
-    
-    
+                    </tr>    
                 </table>
+				
+				<br>
+
+				<input type = "button" class = 'button' value = 'Submit' onclick="login();"/>
+				
+				<br>
+				
+				<tiny>No account? <a href="newuser.html">Register</a> instead.</tiny>
         </div>
 
         <div class="footer">
