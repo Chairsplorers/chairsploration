@@ -9,8 +9,9 @@ body {
 	align-items: center;
 	font-family: "Helvetica";
 	font-size: 5em;	
-	padding-left: 0.1em;
+	padding-left: 0.3em;
 	padding-top: 0.1em;
+	border-bottom: solid;
 }
 
 .header .image {
@@ -40,6 +41,7 @@ img {
     align-items: center;
     overflow: hidden;
     background-color: #b0a1b9;
+	padding-left: 10px;
 }
 
 .navbar a {
@@ -53,18 +55,19 @@ img {
 .dropdown {
     flex: 1 1 auto;
     overflow: hidden;
+	border: none;
 }
 
 .dropdown .dropbtn {
     font-size: 16px;  
-    border: none;	
+	border: none;
     outline: none;
     color: black;
-    padding: 14px 16px;
+    padding-top: 14px;
+	padding-bottom: 16px;
     background-color: inherit;
     font-family: inherit;
 	width: 100%;
-	height: 100%;
 }
 
 .settings .hamb {
@@ -75,7 +78,6 @@ img {
     background-color: inherit;
     font-family: inherit;
 	width: 100%;
-	height: 100%;
 }
 
 .settings:hover .dropdown-content{
@@ -92,6 +94,11 @@ img {
     background-color: #b0a1b9;
 	text-align: center;
 }
+
+.dropdown .dropdown-content{
+	min-width: 160px;
+}
+
   
 .dropdown-content a {
     float: none;
