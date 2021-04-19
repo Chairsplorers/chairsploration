@@ -4,6 +4,32 @@
         <title>Chairsploration</title>
         <link rel="stylesheet" href="style.css">
         <link rel="icon" type="image/jpg" href="logo.jpg"/>
+
+        <style>
+           .reviewcolumn {
+               display: flex;
+               flex-direction: column;
+               padding: 10px 12px;
+           }
+           .review {
+               flex: 0 1 auto;
+               margin: 5px 8px;
+               padding: 5px 8px;
+               background-color: #b1a0b9;
+           }
+           .review a {
+               color: #5253c8;
+           }
+           .review h3 {
+               display:inline;
+           }
+           .review img {
+               max-width: 100%;
+               float: right;
+               max-height: 18em;
+           }
+        </style>
+
     </head>
 
 
@@ -11,7 +37,7 @@
         <!--Title-->
         <div class="header">
             <div class = "image">
-                <img src="./logo.jpg" alt="logo">
+                <a href = "./mainpage.html"><img src="./logo.jpg" alt="logo"></a>
             </div>
             <div class = "text">
                 HAIRSPLORATION
@@ -21,8 +47,8 @@
         <!--Nav bar w dropdown menus-->
         <div class="navbar"> 
             <div class="dropdown">
-                <button class="dropbtn">
-                    <a href="./reviews.php">Reviews</a>
+                <button class="dropbtn" style="background-color: #5253c8">
+                    <a href="#" style="color: #cdbbb6">Reviews</a>
                 </button>
                 <div class="dropdown-content">
                     <a href="./reviews.php">Reviews</a>
@@ -67,32 +93,16 @@
                 </div>
             </div>
         </div>
-        <!--Intro/welcome page-->
-        <div class="content">
-            <p>
-Welcome to Chairsploration, fellow sitting apparatus connoisseur! We know that in your many years of life you&#x27ve sat your behind in plenty of chairs: desk chairs, office chairs, couches, benches, and you&#x27ve looked for a lot of chairs: quiet chairs to work, comfy chairs to relax, and outdoor chairs to enjoy some fresh air. We&#x27re here to nab all of your sitting expertise and to help you optimize your chair experience.
-            </p>
-	        <p>
-Chairsploration is simple. It&#x27s a platform where people can discuss and find chairs. Here are some links to get you started:
-            </p>
-            <p>
-You can browse our chair database <a href="#">here</a>. You can even search by specific tags.
-            </p>
-            <p>
-Check out location-based chairs in your area using <a href="#">this interactive map</a>.
-            </p>
-            <p>
-Find a chair and add your thoughts or various associated media <a href="#">here</a>.
-            </p>
-            <p>
-Check out a <a href="#">random</a> chair!
-            </p>
-            <p>
-Chairsploration is brought to you by the Chairsplorers, a group of students at the University of Texas at Austin. We have sat in chairs for all of our entire lives.
-            </p>
-            <p>
-<a href="./contact-us.html">Contact</a> us.
-            </p>
+
+        <div class="reviewcolumn">
+            <div class = "review">
+                <h3><a href="./chairs/samplechair.php"> Office Chair</a> </h3>
+                <p> The chair is quite wonderful. It has wheels, spins, and has adjustable back angle, seat angle, and height. It is good enough to sit in all day. </p>
+            </div>
+            <div class = "review">
+                <h3> <a href="./chairs/samplechair.php"> Butt Rock</a></h3>
+                <img src="./butt_rock.jpg" alt="butt rock"><p> While this rock isn't very easy to get to a few miles into the New Hance Trail, it is comfortable for rest on the trail and the views are spectacular. </p>
+            </div>
         </div>
 
         <div class="footer">
