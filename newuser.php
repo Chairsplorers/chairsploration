@@ -148,8 +148,8 @@ if (isset($_POST["submit"])){
                     </div>
                 </button>
                 <div class="dropdown-content">
-                    <a href="./login.html">Login</a>
-                    <a href="./newuser.html">New User</a>
+                    <a href="./login.php">Login</a>
+                    <a href="./newuser.php">New User</a>
                     <a href="./settings.html">Settings</a>
                 </div>
             </div>
