@@ -54,10 +54,6 @@ img {
     flex: 1 1 auto;
     overflow: hidden;
 }
-  
-.dropdown-r {
-    flex: 1 1 auto;
-}
 
 .dropdown .dropbtn {
     font-size: 16px;  
