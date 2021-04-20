@@ -1,11 +1,31 @@
 <?php
-    error_reporting(E_ALL);
-    ini_set("display_errors", 1);
-    session_start();
-    if (!isset ($_COOKIE['username']) || ($_COOKIE["username"] == '')) {
-        $_SESSION['redir'] = "chairs/samplechair.php";
-        header ("Location: ../login.php");
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+session_start();
+if (!isset ($_COOKIE['username']) || ($_COOKIE["username"] == '')) {
+    $_SESSION['redir'] = "chairs/samplechair.php";
+    header ("Location: ../login.php");
+}
+?>
+
+<?php
+
+if (isset($_POST["comment"]) && !empty($_POST['commenttxt'])){
+    if (isset($_POST['nusername'])){
+        $user = $_POST["nusername"];
+        $comm = $_POST["commenttxt"];
+        $file = fopen("comments.txt", "a");
+        fwrite($file, "$user:$comm\n");
+        fclose($file);
+    } else if (isset($_POST['username'])){
+        $user = $_POST["nusername"];
+        $comm = $_POST["commenttxt"];
+        $file = fopen("comments.txt", "a");
+        fwrite($file, "$user:$comm\n");
+        fclose($file);
     }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -123,16 +143,29 @@
 			<form id="comment">
 			Comment:
 			<br>
-			<input type="text" name="comment">
+			<input type="text" name="commenttxt">
 			<br>
 			<br>
-			<input type="submit">
+			<input type="submit" name="comment">
 			<br>
 			
-			Comment feature not yet available.
 			</form>
 		
         </div>
+
+        <p><h4>Comments</h4></p>
+        
+        <?php
+
+        $login_file = file("comments.txt", FILE_IGNORE_NEW_LINES);
+
+        foreach ($login_file as $line) {
+            $line_arr = explode(":", $line);
+            echo "<p>$line_arr[0] said $line_arr[1]</p>\n";
+        }
+
+        ?>
+
 
         <div class="footer" >
             <p>&#169; Last updated 04/05/21 by the <a href="mailto:chairsplorers@chairschairschairs.com">Chairsplorers</a>.</p>
