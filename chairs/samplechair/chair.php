@@ -50,48 +50,51 @@ if (isset($_POST["comment"]) && !empty($_POST['commenttxt']) && $_POST["commentt
         <!--Nav bar w dropdown menus-->
         <div class="navbar"> 
             <div class="dropdown">
-                <button class="dropbtn">
-                    <a href="../../reviews.php">Reviews</a>
-                </button>
+                <a href="../../reviews.html"><button class="dropbtn">
+                    Reviews
+                </button></a>
                 <div class="dropdown-content">
-                    <a href="../../reviews.php">Reviews</a>
+                    <a href="../../reviews.html">Reviews</a>
                     <a href="../../videos.html">Videos</a>
                 </div>
             </div>
             <div class="dropdown">
                 <button class="dropbtn">
-                    <a href="../../superlatives.html">Superlatives</a>
+                    Superlatives
                 </button>
                 <div class="dropdown-content">
                     <a href="../../art.html">Art</a>
                     <a href="../../leaderboard.html">Leaderboard</a>
                 </div>
             </div>
-            <a href="../../chairmap.html">Chair Map</a>
+			<div class="dropdown">
+				<a href="../../chairmap.html"><button class="dropbtn">
+					Chair Map
+				</button></a>
+			</div>
             <div class="dropdown">
-                <button class="dropbtn">
-                    <a href="../../contact-us.html">About Us</a>
-                </button>
+                <a href="../../contact-us.html"><button class="dropbtn">
+					About Us
+                </button></a>
                 <div class="dropdown-content">
                     <a href='../../contact-us.html'>Contact Us!</a>
                     <a href='../../site-updates.html'>Site Updates</a>
                 </div>
             </div>
-            <input type = "text" class = "input">
+            <input type = "text" class = "input" style = "margin-left:10px;">
             <input type = "button" class = "search" value = "search">
             <!-- probably a form element-->
             <input type='button' class='button' value='I&#x27m Feeling Lucky!'>
             <!-- button -->
-            <div class="dropdown">
-                <button class="dropbtn">
+            <div class="settings">
+                <button class="hamb">
                     <div class="ham-image">
-                        <img src="../../hamburger.png" alt="hamburger">
+                        <img src="../../hamburger.png" alt="hamburger" height="40px">
                     </div>
                 </button>
                 <div class="dropdown-content">
                     <a href="../../login.php">Login</a>
                     <a href="../../newuser.php">New User</a>
-                    <a href="#">Toggle Dark Theme</a>
                     <a href="../../settings.html">Settings</a>
                 </div>
             </div>
@@ -113,7 +116,7 @@ if (isset($_POST["comment"]) && !empty($_POST['commenttxt']) && $_POST["commentt
 		<div class="content">
 			<h3>Description:</h3>
 			
-			<p> This chair, produced by Chair Industries, is a simple dining room chair. It is intended for use inside of the home, as evidenced by its small size. The seats are made of wood and cushioned with artificial leather. It is a low-cost, generic chair. </p>
+			<p> [Description] </p>
 			
 			<h3>	Rate this chair: <h3>
 			<div id="ratingbar" onmouseleave="resetRate()"  onclick="setRate()">
