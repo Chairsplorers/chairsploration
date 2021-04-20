@@ -140,7 +140,7 @@ if (isset($_POST["comment"]) && !empty($_POST['commenttxt'])){
 		
 			<h3> Leave a comment: </h3>
 			
-			<form id="comment">
+			<form method="post" id="comment"  action="samplechair.php">
 			Comment:
 			<br>
 			<input type="text" name="commenttxt">
