@@ -11,19 +11,11 @@ if (!isset ($_COOKIE['username']) || ($_COOKIE["username"] == '')) {
 <?php
 
 if (isset($_POST["comment"]) && !empty($_POST['commenttxt'])){
-    if (isset($_POST['nusername'])){
-        $user = $_POST["nusername"];
-        $comm = $_POST["commenttxt"];
-        $file = fopen("comments.txt", "a");
-        fwrite($file, "$user:$comm\n");
-        fclose($file);
-    } else if (isset($_POST['username'])){
-        $user = $_POST["nusername"];
-        $comm = $_POST["commenttxt"];
-        $file = fopen("comments.txt", "a");
-        fwrite($file, "$user:$comm\n");
-        fclose($file);
-    }
+	$user = $_COOKIE["username"];
+	$comm = $_POST["commenttxt"];
+	$file = fopen("comments.txt", "a");
+	fwrite($file, "$user:$comm\n");
+	fclose($file);
 }
 
 ?>
@@ -150,22 +142,21 @@ if (isset($_POST["comment"]) && !empty($_POST['commenttxt'])){
 			<br>
 			
 			</form>
+			
+			<p><h4>Comments</h4></p>
+        
+			<?php
+
+			$login_file = file("comments.txt", FILE_IGNORE_NEW_LINES);
+
+			foreach ($login_file as $line) {
+				$line_arr = explode(":", $line);
+				echo "<p>$line_arr[0] said $line_arr[1]</p>\n";
+			}
+
+			?>
 		
         </div>
-
-        <p><h4>Comments</h4></p>
-        
-        <?php
-
-        $login_file = file("comments.txt", FILE_IGNORE_NEW_LINES);
-
-        foreach ($login_file as $line) {
-            $line_arr = explode(":", $line);
-            echo "<p>$line_arr[0] said $line_arr[1]</p>\n";
-        }
-
-        ?>
-
 
         <div class="footer" >
             <p>&#169; Last updated 04/05/21 by the <a href="mailto:chairsplorers@chairschairschairs.com">Chairsplorers</a>.</p>
