@@ -11,19 +11,11 @@ if (!isset ($_COOKIE['username']) || ($_COOKIE["username"] == '')) {
 <?php
 
 if (isset($_POST["comment"]) && !empty($_POST['commenttxt'])){
-    if (isset($_POST['nusername'])){
-        $user = $_POST["nusername"];
-        $comm = $_POST["commenttxt"];
-        $file = fopen("comments.txt", "a");
-        fwrite($file, "$user:$comm\n");
-        fclose($file);
-    } else if (isset($_POST['username'])){
-        $user = $_POST["nusername"];
-        $comm = $_POST["commenttxt"];
-        $file = fopen("comments.txt", "a");
-        fwrite($file, "$user:$comm\n");
-        fclose($file);
-    }
+	$user = $_COOKIE["username"];
+	$comm = $_POST["commenttxt"];
+	$file = fopen("comments.txt", "a");
+	fwrite($file, "$user:$comm\n");
+	fclose($file);
 }
 
 ?>
