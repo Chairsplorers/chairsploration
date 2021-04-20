@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 ini_set("display_errors", 1);
 session_start();
 if (!isset ($_COOKIE['username']) || ($_COOKIE["username"] == '')) {
-    $_SESSION['redir'] = "chairs/samplechair/chair.php";
+    $_SESSION['redir'] = "chairs/9/chair.php";
     header ("Location: ../../login.php");
 }
 ?>
