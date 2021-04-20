@@ -247,8 +247,10 @@ if (isset($_POST["submit"])){
                     </tr>
 				</table>
             </form>
+
+            <?php echo $message ?><br>
 				
-				<tiny>Already have an account? <a href="login.php">Login</a> instead.</tiny>
+			<tiny>Already have an account? <a href="login.php">Login</a> instead.</tiny>
         </div>
 
 
