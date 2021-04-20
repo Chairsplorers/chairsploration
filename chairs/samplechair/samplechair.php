@@ -3,19 +3,20 @@ error_reporting(E_ALL);
 ini_set("display_errors", 1);
 session_start();
 if (!isset ($_COOKIE['username']) || ($_COOKIE["username"] == '')) {
-    $_SESSION['redir'] = "chairs/samplechair.php";
-    header ("Location: ../login.php");
+    $_SESSION['redir'] = "chairs/samplechair/samplechair.php";
+    header ("Location: ../../login.php");
 }
 ?>
 
 <?php
 
-if (isset($_POST["comment"]) && !empty($_POST['commenttxt'])){
+if (isset($_POST["comment"]) && !empty($_POST['commenttxt']) && $_POST["commenttxt"] != $_COOKIE["lastcomment"]){
 	$user = $_COOKIE["username"];
 	$comm = $_POST["commenttxt"];
 	$file = fopen("comments.txt", "a");
 	fwrite($file, "$user:$comm\n");
 	fclose($file);
+	setcookie('lastcomment', $comm);
 }
 
 ?>
@@ -24,8 +25,8 @@ if (isset($_POST["comment"]) && !empty($_POST['commenttxt'])){
 <html>
     <head>
         <title>Chairsploration</title>
-        <link rel="stylesheet" href="../style.css">
-        <link rel="icon" type="image/jpg" href="../logo.jpg"/>
+        <link rel="stylesheet" href="../../style.css">
+        <link rel="icon" type="image/jpg" href="../../logo.jpg"/>
 		<script src="rating.js"></script>
 		<style type = text/css>
 			div.chairimg {width:30%; float:right; margin-right:50px; margin-top:10px;text-align:center;padding:10px;}
@@ -39,7 +40,7 @@ if (isset($_POST["comment"]) && !empty($_POST['commenttxt'])){
         <!--Title-->
         <div class="header">
             <div class = "image">
-                <a href="../mainpage.html"><img src="../logo.jpg" alt="logo"></a>
+                <a href="../../mainpage.html"><img src="../../logo.jpg" alt="logo"></a>
             </div>
             <div class = "text">
                 HAIRSPLORATION
@@ -50,30 +51,30 @@ if (isset($_POST["comment"]) && !empty($_POST['commenttxt'])){
         <div class="navbar"> 
             <div class="dropdown">
                 <button class="dropbtn">
-                    <a href="../reviews.php">Reviews</a>
+                    <a href="../../reviews.php">Reviews</a>
                 </button>
                 <div class="dropdown-content">
-                    <a href="../reviews.php">Reviews</a>
-                    <a href="../videos.html">Videos</a>
+                    <a href="../../reviews.php">Reviews</a>
+                    <a href="../../videos.html">Videos</a>
                 </div>
             </div>
             <div class="dropdown">
                 <button class="dropbtn">
-                    <a href="../superlatives.html">Superlatives</a>
+                    <a href="../../superlatives.html">Superlatives</a>
                 </button>
                 <div class="dropdown-content">
-                    <a href="../art.html">Art</a>
-                    <a href="../leaderboard.html">Leaderboard</a>
+                    <a href="../../art.html">Art</a>
+                    <a href="../../leaderboard.html">Leaderboard</a>
                 </div>
             </div>
-            <a href="../chairmap.html">Chair Map</a>
+            <a href="../../chairmap.html">Chair Map</a>
             <div class="dropdown">
                 <button class="dropbtn">
-                    <a href="../contact-us.html">About Us</a>
+                    <a href="../../contact-us.html">About Us</a>
                 </button>
                 <div class="dropdown-content">
-                    <a href='../contact-us.html'>Contact Us!</a>
-                    <a href='../site-updates.html'>Site Updates</a>
+                    <a href='../../contact-us.html'>Contact Us!</a>
+                    <a href='../../site-updates.html'>Site Updates</a>
                 </div>
             </div>
             <input type = "text" class = "input">
@@ -84,31 +85,30 @@ if (isset($_POST["comment"]) && !empty($_POST['commenttxt'])){
             <div class="dropdown">
                 <button class="dropbtn">
                     <div class="ham-image">
-                        <img src="../hamburger.png" alt="hamburger">
+                        <img src="../../hamburger.png" alt="hamburger">
                     </div>
                 </button>
                 <div class="dropdown-content">
-                    <a href="../login.php">Login</a>
-                    <a href="../newuser.php">New User</a>
+                    <a href="../../login.php">Login</a>
+                    <a href="../../newuser.php">New User</a>
                     <a href="#">Toggle Dark Theme</a>
-                    <a href="../settings.html">Settings</a>
+                    <a href="../../settings.html">Settings</a>
                 </div>
             </div>
         </div>
 
-		<h1 align="center"> Cool Chair </h1>
+		<?php
+			$f = fopen("name.txt",'r');
+			$name = fgets($f);
+			fclose($f);
+			
+			echo "<h1 align=\"center\"> $name </h1>";
+		?>
 
-		
-		
-
-		
-		
 		<div class = "chairimg">
-			<img src = "samplechair.jpg" alt = "chair" width = 90%></img>	
+			<img src = "mainimg.jpg" alt = "chair" width = 90%></img>	
 			<p>The chair.</p>
 		</div>
-		
-		
 		
 		<div class="content">
 			<h3>Description:</h3>
