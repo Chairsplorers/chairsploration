@@ -93,6 +93,7 @@ img {
     position: absolute;
     background-color: #b0a1b9;
 	text-align: center;
+	z-index: 1;
 }
 
 .dropdown .dropdown-content{

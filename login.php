@@ -24,7 +24,7 @@ if (isset($_POST["submit"])){
             $un = $_POST["username"];
             $pw = $_POST["password"];
             if (!array_key_exists($un, $login_data) || $login_data[$un] != $pw) {
-                $message = "Login failed. Username does not exist or password does not match.";
+                $message = "Login failed. Username does not exist or incorrect password.";
             } else{
                 $time = 120;
                 setcookie('username', $un, time()+$time);
@@ -35,6 +35,8 @@ if (isset($_POST["submit"])){
             $message = "Please provide a username and a password.";
         } 
 
+    } else{
+        $message = "Already Logged in!";
     }
 }
 ?>
@@ -151,6 +153,8 @@ if (isset($_POST["submit"])){
         </div>
         <!-- <script type = "text/javascript" src="verify.js"></script> -->
 
+        <center><h3>Please Login to See or Submit Reviews</h3></center>
+
         <div class ='newuser-info'>
             <form name = 'login' id = 'information' method="post" action="login.php">
                 <table>
@@ -180,7 +184,7 @@ if (isset($_POST["submit"])){
 				<br>
             </form>
 
-            <?php echo $message ?>
+            <?php echo $message ?><br>
 				
 			<tiny>No account? <a href="newuser.php">Register</a> instead.</tiny>
         </div>
