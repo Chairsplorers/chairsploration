@@ -2,54 +2,76 @@
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 session_start();
+if (!isset($_GET['id'])){
+	header("Location: ../mainpage.html");
+}
+$id = $_GET['id'];
+
 if (!isset ($_COOKIE['username']) || ($_COOKIE["username"] == '')) {
-    $_SESSION['redir'] = "chairs/1/chair.php";
+    $_SESSION['redir'] = "chairs/chair.php?id=$id";
     header ("Location: ../login.php");
 }
+$user = $_COOKIE['username'];
 
-$server = "spring-2021.cs.utexas.edu";
-$user = "cs329e_bulko_wsale";
-$pwd = "Offend_German-might";
+$dbserver = "spring-2021.cs.utexas.edu";
+$dbuser = "cs329e_bulko_wsale";
+$dbpwd = "Offend_German-might";
 $dbName = "cs329e_bulko_wsale";
-$mysqli = new mysqli ($server,$user,$pwd,$dbName);
+$mysqli = new mysqli ($dbserver,$dbuser,$dbpwd,$dbName);
 
 if ($mysqli->connect_errno) {
 	die('Connect Error: ' . $mysqli->connect_errno .": " . $mysqli->connect_error);
 }
-?>
 
-<?php
-$id = 5;
+
+
 $command = "SELECT * FROM chairs WHERE cid = $id";
 $result = $mysqli -> query($command);
-
-if (!$result) {
-	die("Query failed: ($mysqli->error <br> SQL command= $command");
-}
+if (!$result) {header("Location: ../mainpage.html");}
 
 if ($result->num_rows == 1) {
-	// output data of each row
-	while($row = $result->fetch_assoc()) {
-		$name = $row["name"];
-		$description = $row["description"];
-	}
+	$row = $result->fetch_assoc();
+	$name = $row["name"];
+	$description = $row["description"];
 }
 else {
-		$name = "No matches.";
+	header("Location: ../mainpage.html");
 }
 ?>
 
 <?php
+$command = "SELECT * FROM crandr WHERE cid = $id AND user = '$user'";
+$result = $mysqli -> query($command);
+if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
 
-if (isset($_POST["comment"]) && !empty($_POST['commenttxt']) && $_POST["commenttxt"] != $_COOKIE["lastcomment"]){
-	$user = $_COOKIE["username"];
-	$comm = $_POST["commenttxt"];
-	$file = fopen("comments.txt", "a");
-	fwrite($file, "$user:$comm\n");
-	fclose($file);
-	setcookie('lastcomment', $comm);
+if ($result->num_rows == 0 and (isset($_POST["rating"]) || isset($_POST["review"]))){
+	$command = "INSERT INTO crandr (cid,user,rating,review) VALUES ($id,'$user',0,'');";
+	$result = $mysqli -> query($command);
+	if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
 }
 
+if (isset($_POST["rating"])){
+	$rate = $_POST["ratingtxt"];
+	
+	$command = "UPDATE crandr SET rating = $rate WHERE cid = $id AND user = '$user'";
+	$result = $mysqli -> query($command);
+	if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+}
+
+if (isset($_POST["review"]) && !empty($_POST['reviewtxt'])){
+	$comm = $_POST["reviewtxt"];
+
+	$command = sprintf("UPDATE crandr SET review = '%s' WHERE cid = $id AND user = '$user'",$mysqli->real_escape_string($comm));
+	$result = $mysqli -> query($command);
+	if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+
+}
+
+if(isset($_POST["dreview"])){
+	$command = "UPDATE crandr SET review = '' WHERE cid = $id AND user = '$user'";
+	$result = $mysqli -> query($command);
+	if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+}
 ?>
 
 <!DOCTYPE html>
@@ -58,7 +80,7 @@ if (isset($_POST["comment"]) && !empty($_POST['commenttxt']) && $_POST["commentt
         <title>Chairsploration</title>
         <link rel="stylesheet" href="../style.css">
         <link rel="icon" type="image/jpg" href="../logo.jpg"/>
-		<script src="rating.js"></script>
+		<script src="./chairjs.js"></script>
 		<style type = text/css>
 			div.chairimg {width:30%; float:right; margin-right:50px; margin-top:10px;text-align:center;padding:10px;}
 			div.content{height:500px}
@@ -157,31 +179,119 @@ if (isset($_POST["comment"]) && !empty($_POST['commenttxt']) && $_POST["commentt
 				<img id="10" class = "star" onmouseover="changeRate(10)">
 				<k id="rating"></k>/10
 			</div>
-		
-			<h3> Leave a comment: </h3>
 			
-			<form method="post" id="comment"  action="samplechair.php">
-			Comment:
-			<br>
-			<input type="text" name="commenttxt">
-			<br>
-			<br>
-			<input type="submit" name="comment">
-			<br>
-			
+			<?php print "<form method='post' id='review'  action='chair.php?id=$id'>"; ?>
+				<input id="ratingform" name = "ratingtxt" type="text" value="" style = "display:none;">
+				<input type = "submit" name = "rating" value = "Update Rating">
 			</form>
 			
-			<p><h4>Comments</h4></p>
+			<?php
+			$command = "SELECT * FROM crandr WHERE cid = $id AND user = '$user'";
+			$result = $mysqli -> query($command);
+			if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}			
+			
+			if($result->num_rows == 1){
+				$row = $result->fetch_assoc();
+				$rating = $row['rating'];
+				if($rating>0){
+					print <<<SETRATE
+						<script>
+						changeRate($rating);
+						setRate();
+						</script>
+SETRATE;
+				}
+			}
+			?>
+			
+			<?php 
+			$command = "SELECT user,review FROM crandr WHERE cid = $id AND user = '$user';";
+			$result = $mysqli -> query($command);	
+			if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+			
+			if($result->num_rows == 0){
+				print <<<LAR
+					<h3> Leave a review: </h3>
+			
+					<form method="post" id="review"  action="chair.php?id=$id">
+					Review:
+					<br>
+					<input type="text" name="reviewtxt">
+					<br>
+					<br>
+					<input type="submit" name="review">
+					<br>
+					
+					</form>
+LAR;
+			}
+			else{
+				$row = $result->fetch_assoc();
+				$review = $row['review'];
+				
+				if ($review == ""){
+					print <<<LAR
+						<h3> Leave a review: </h3>
+				
+						<form method="post" id="review"  action="chair.php?id=$id">
+						Review:
+						<br>
+						<input type="text" name="reviewtxt">
+						<br>
+						<br>
+						<input type="submit" name="review">
+						<br>
+						
+						</form>
+LAR;
+				}
+				else{
+					print <<<LAR
+						<h3> Your review: </h3>
+				
+						<div id="yreview">
+							$review
+							
+							<br><br>
+							
+							<button onclick = "editReview()">Edit</button>
+						</div>
+						
+						<div id="edit" style = "display:none; margin-top:10px;">
+							<form method="post" id="review"  action="chair.php?id=$id">
+							Review:
+							<br>
+							<input type="text" name="reviewtxt" value = "$review">
+							<br>
+							<br>
+							<input type="submit" name="review" value = "Update">
+							<input type="submit" name="dreview" value = "Delete">
+							<br>
+							
+							</form>
+						</div>
+LAR;
+				}
+			}
+			
+			?>
+			
+			<p><h4>Reviews</h4></p>
         
 			<?php
-
-			$login_file = file("$id/comments.txt", FILE_IGNORE_NEW_LINES);
-
-			foreach ($login_file as $line) {
-				$line_arr = explode(":", $line);
-				echo "<p>$line_arr[0] said $line_arr[1]</p>\n";
+			$command = "SELECT user,review FROM crandr WHERE cid = $id";
+			$result = $mysqli -> query($command);	
+			if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+			
+			if ($result->num_rows > 0){
+				while($row = $result->fetch_assoc()) {
+					$user = $row['user'];
+					$review = $row['review'];
+					if ($review != ""){
+						echo "<div class = 'review'>$user <br><br> $review</div>\n";
+					}
+				}
 			}
-
 			?>
 		
         </div>
