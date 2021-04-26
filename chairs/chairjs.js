@@ -11,6 +11,7 @@ function resetRate(){
 			document.getElementById(i).src = emp;
 		}
 		document.getElementById("rating").innerHTML = "?";
+		document.getElementById("ratingform").value = "0";
 	}
 }
 
@@ -25,9 +26,15 @@ function changeRate(j){
 			if (i>j){document.getElementById(i).src = emp;}
 		}
 		document.getElementById("rating").innerHTML = j;
+		document.getElementById("ratingform").value = j;
 	}
 }
 
 function setRate(){
 	set = 1-set;
+}
+
+function editReview(){
+	document.getElementById("edit").style.display = "block";
+	document.getElementById("yreview").style.display = "none";
 }
