@@ -288,7 +288,7 @@ LAR;
 					$user = $row['user'];
 					$review = $row['review'];
 					if ($review != ""){
-						echo "<div class = 'review'>$user <br><br> $review</div>\n";
+						echo "<div class = 'review' style = 'margin-top: 10px;'>$user <br><br> $review</div>\n";
 					}
 				}
 			}
