@@ -26,7 +26,7 @@ if (isset($_POST["submit"])){
             if (!array_key_exists($un, $login_data) || $login_data[$un] != $pw) {
                 $message = "Login failed. Username does not exist or incorrect password.";
             } else{
-                $time = 120;
+                $time = 12000;
                 setcookie('username', $un, time()+$time);
                 $message = "Login successful! Redirecting to your page...";
                 header("Refresh:1; url=$page");

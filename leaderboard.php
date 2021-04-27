@@ -1,64 +1,58 @@
+<?php
+$dbserver = "spring-2021.cs.utexas.edu";
+$dbuser = "cs329e_bulko_wsale";
+$dbpwd = "Offend_German-might";
+$dbName = "cs329e_bulko_wsale";
+$mysqli = new mysqli ($dbserver,$dbuser,$dbpwd,$dbName);
+
+if ($mysqli->connect_errno) {
+	die('Connect Error: ' . $mysqli->connect_errno .": " . $mysqli->connect_error);
+}
+?>
+
+
 <!DOCTYPE html>
 <html>
     <head>
         <title>Chairsploration</title>
         <link rel="stylesheet" href="style.css">
         <link rel="icon" type="image/jpg" href="logo.jpg"/>
-	<style>
-	.contentsectionborder {
-		border: 5px solid;
-		border-color: #473d4f;
-		background-color: #b0a1b9;
-		margin: 2em;
-		background-clip: padding-box;
-	}
-	
-	.contentsection {
-		display: grid;
-		grid-template-columns: auto;
-		align-content:center;
-		justify-content:center;
-		text-align: center;
-		background-color: #f5dfe6;
-		margin: 2em;
-		padding-top: 3em;
-		padding-bottom: 3em;
-	}
-	.contentsection h1 {
-		font-family: "Merriweather", "Lato", Helvetica, sans-serif;
-	}
-	.contentsection p {
-		margin-left: 5em;
-		margin-right: 5em;
-	}
-	.contentsection a {
-		text-decoration: none;
-		color: black;
-	}
-	.explorerow {
-		display: grid;
-		grid-template-columns: auto auto auto auto;
-		align-content: center;
-		justify-content: space-around;
-		text-align: center;
-		margin-top: 2em;
-		margin-bottom: 2em;
-		font-size: 2em;
-	}
-	
-	.explorerow button {
-		border: 5px solid;
-		border-color: #473d4f;
-		background-color: #f5dfe6;
-		padding: 3em;
-	}
-	.explorerow a {
-		text-decoration: none;
-		color: black;
-		font-size: 2em;
-		padding: 1em;
-	}
-	</style>
+		
+		<style>
+			.contentheader {
+				background-color: #f5dfe6;
+				margin: auto;
+				margin-top: 2em;
+				margin-bottom: 2em;
+				border: 4px solid;
+				border-color: #473d4f;
+				padding: 0.5em;
+			}
+			.contentheader h1{
+				text-align:center;
+				font-family: "Merriweather", "Lato", Helvetica, sans-serif;
+				margin: 0.25em;
+				font-size: 3em;
+			}
+			table.leaderboard{
+				margin-left:auto;
+				margin-right:auto;
+				border: solid 5px;
+				text-align:center;
+				font-size: 120%;
+			}
+			table.leaderboard th{
+				height: 2em;
+				border-bottom: solid;
+				background-color: #5253c8;
+				color: #f5dfe6;
+			}
+			table.leaderboard td{
+				height: 2em;
+				border-bottom: dashed;
+				border-color: #b0a1b9;
+			}
+		</style>
     </head>
 
 
@@ -66,7 +60,7 @@
         <!--Title-->
         <div class="header">
             <div class = "image">
-                <img src="./logo.jpg" alt="logo">
+                <a href="./mainpage.html"><img src="./logo.jpg" alt="logo"></a>
             </div>
             <div class = "text">
                 HAIRSPLORATION
@@ -76,7 +70,7 @@
         <!--Nav bar w dropdown menus-->
         <div class="navbar"> 
             <div class="dropdown">
-                <a href="./reviews.php"><button class="dropbtn">
+                <a href="./reviews.html"><button class="dropbtn">
                     Reviews
                 </button></a>
                 <div class="dropdown-content">
@@ -125,29 +119,48 @@
                 </div>
             </div>
         </div>
-        <!--Intro/welcome page-->
+
         <div class="content">
-		
-	    <div class = "contentsectionborder"><div class="contentsection">
-	    <h1 style = "font-size:50px;"> Welcome to Chairsploration! </h1>
-            <p style = "font-size:20px;">
-Hello, fellow sitting apparatus connoisseur! We know that in your many years of life you&#x27ve sat your behind in plenty of chairs and you&#x27ve looked for a lot of chairs: quiet chairs to work, comfy chairs to relax, and outdoor chairs to enjoy some fresh air. We&#x27re here to nab all of your sitting expertise and to help you optimize your chair experience.
-            </p>
-	    </div></div>
-	    <div class="explorerow">
-		    <button>
-<a href="./chairmap.html">Interactive Map</a>
-		    </button>
-		    <button>
-<a href="./reviews.html">Chair Reviews</a>
-		    </button>
-		    <button>
-			    <a href="#">Random Chair</a>
-		    </button>
-			<button>
-			    <a href="#">Contact Us</a>
-		    </button>
+            <!-- in future add way to resort for different categories-->
+	    <div class="contentheader">
+		<h1>Top Chairs</h1>
 	    </div>
+            <table class = "leaderboard">
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+					<th>Location</th>
+                    <th>Avg.</th>
+                    <th>Users</th>
+                </tr>
+                
+				<?php
+					$command = "SELECT * FROM chairs ORDER BY wavg DESC, name;";
+					$result = $mysqli -> query($command);
+					if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+					
+					$rank = 1;
+					
+					while($row = $result->fetch_assoc()) {
+						$cid = $row['cid'];
+						$name = $row['name'];
+						$loc = $row['loc'];
+						$avg = $row['avg'];
+						$nusers = $row['nusers'];
+						
+						print <<<ENTRY
+						<tr>
+							<td style = "width:20em;border-right:dashed; border-color: #b0a1b9;">$rank</td>
+							<td style = "width:120em;border-right:dashed; border-color: #b0a1b9;"><a href = "./chairs/chair.php?id=$cid">$name</a></td>
+							<td style = "width:80em;border-right:dashed; border-color: #b0a1b9;">$loc</td>
+							<td style = "width:25em;border-right:dashed; border-color: #b0a1b9;">$avg</td>
+							<td style = "width:25em;">$nusers</td>
+						</tr>
+ENTRY;
+						$rank = $rank+1;
+					}
+				?>
+            </table>
         </div>
 
         <div class="footer">

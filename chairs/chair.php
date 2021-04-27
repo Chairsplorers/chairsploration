@@ -5,10 +5,10 @@ session_start();
 if (!isset($_GET['id'])){
 	header("Location: ../mainpage.html");
 }
-$id = $_GET['id'];
+$cid = $_GET['id'];
 
 if (!isset ($_COOKIE['username']) || ($_COOKIE["username"] == '')) {
-    $_SESSION['redir'] = "chairs/chair.php?id=$id";
+    $_SESSION['redir'] = "chairs/chair.php?id=$cid";
     header ("Location: ../login.php");
 }
 $user = $_COOKIE['username'];
@@ -25,7 +25,7 @@ if ($mysqli->connect_errno) {
 
 
 
-$command = "SELECT * FROM chairs WHERE cid = $id";
+$command = "SELECT * FROM chairs WHERE cid = $cid";
 $result = $mysqli -> query($command);
 if (!$result) {header("Location: ../mainpage.html");}
 
@@ -40,37 +40,79 @@ else {
 ?>
 
 <?php
-$command = "SELECT * FROM crandr WHERE cid = $id AND user = '$user'";
+$command = "SELECT MAX(rid) FROM crandr;";
+$result = $mysqli -> query($command);
+if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+$nrid = $result->fetch_assoc()["MAX(rid)"]+1;
+
+$command = "SELECT * FROM crandr WHERE cid = $cid AND user = '$user'";
 $result = $mysqli -> query($command);
 if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
 
-if ($result->num_rows == 0 and (isset($_POST["rating"]) || isset($_POST["review"]))){
-	$command = "INSERT INTO crandr (cid,user,rating,review) VALUES ($id,'$user',0,'');";
-	$result = $mysqli -> query($command);
-	if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
-}
+if ($user != ""){
+	if ($result->num_rows == 0 and (isset($_POST["rating"]) || isset($_POST["review"]))){
+		$command = "INSERT INTO crandr (cid,user,rating,review,rid) VALUES ($cid,'$user',0,'',$nrid);";
+		$result = $mysqli -> query($command);
+		if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+	}
 
-if (isset($_POST["rating"])){
-	$rate = $_POST["ratingtxt"];
-	
-	$command = "UPDATE crandr SET rating = $rate WHERE cid = $id AND user = '$user'";
-	$result = $mysqli -> query($command);
-	if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
-}
+	if (isset($_POST["rating"])){
+		$rate = $_POST["ratingtxt"];
+		
+		$command = "SELECT rating FROM crandr WHERE cid=$cid AND user = '$user'";
+		$result = $mysqli -> query($command);
+		if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+		$oldrating = $result->fetch_assoc()["rating"];
+		
+		$command = "SELECT sum,nusers FROM chairs WHERE cid=$cid";
+		$result = $mysqli -> query($command);
+		if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+		$row = $result->fetch_assoc();
+		$sum = $row['sum'];
+		$nusers = $row['nusers'];
+		
+		$sum = $sum-$oldrating+$rate;
+		
+		if ($oldrating == 0 and $rate > 0){
+			$nusers = $nusers+1;
+		}
+		else if ($oldrating > 0 and $rate == 0) {
+			$nusers = $nusers-1;
+		}
+		
+		$avg = 0;
+		if ($nusers > 0){
+			$avg = $sum/$nusers;
+		}
+		
+		$wavg = $avg * min($nusers,10);
+		
+		$command = "UPDATE chairs SET sum=$sum, nusers=$nusers, avg=$avg, wavg=$wavg WHERE cid=$cid";
+		$result = $mysqli -> query($command);
+		if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+		
+		$command = "UPDATE crandr SET rating = $rate WHERE cid = $cid AND user = '$user'";
+		$result = $mysqli -> query($command);
+		if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+	}
 
-if (isset($_POST["review"]) && !empty($_POST['reviewtxt'])){
-	$comm = $_POST["reviewtxt"];
+	if (isset($_POST["review"]) && !empty($_POST['reviewtxt'])){
+		$comm = $_POST["reviewtxt"];
 
-	$command = sprintf("UPDATE crandr SET review = '%s' WHERE cid = $id AND user = '$user'",$mysqli->real_escape_string($comm));
-	$result = $mysqli -> query($command);
-	if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+		$command = sprintf("UPDATE crandr SET review = '%s' WHERE cid = $cid AND user = '$user'",$mysqli->real_escape_string($comm));
+		$result = $mysqli -> query($command);
+		if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+		
+		$command = "UPDATE crandr SET rid=$nrid WHERE cid = $cid AND user = '$user';";
+		$result = $mysqli -> query($command);
+		if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+	}
 
-}
-
-if(isset($_POST["dreview"])){
-	$command = "UPDATE crandr SET review = '' WHERE cid = $id AND user = '$user'";
-	$result = $mysqli -> query($command);
-	if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+	if(isset($_POST["dreview"])){
+		$command = "UPDATE crandr SET review = '' WHERE cid = $cid AND user = '$user'";
+		$result = $mysqli -> query($command);
+		if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+	}
 }
 ?>
 
@@ -137,7 +179,7 @@ if(isset($_POST["dreview"])){
             <input type = "text" class = "input" style = "margin-left:10px;">
             <input type = "button" class = "search" value = "search">
             <!-- probably a form element-->
-            <input type='button' class='button' value='I&#x27m Feeling Lucky!'>
+            <input type='button' class='button' value='I&#x27m Feeling Lucky!' onclick = "document.location='../randomchair.php'">
             <!-- button -->
             <div class="settings">
                 <button class="hamb">
@@ -156,14 +198,34 @@ if(isset($_POST["dreview"])){
 		<?php echo "<h1 align=\"center\"> $name </h1>"; ?>
 
 		<div class = "chairimg">
-			<?php echo "<img src = '$id/mainimg.jpg' alt = 'chair' width = 90%></img>"; ?>
+			<?php echo "<img src = '$cid/mainimg.jpg' alt = 'chair' width = 90%></img>"; ?>
 			<p>The chair.</p>
 		</div>
 		
 		<div class="content">
-			<h3>Description:</h3>
+			<div class = "description">
+				<h3>Description:</h3>
+				
+				<?php echo "<p> $description </p>" ?>
+			</div>
 			
-			<?php echo "<p> $description </p>" ?>
+			<div class = "avg">
+				<h3>Average score:</h3>
+				
+				<?php
+				$command = "SELECT avg,nusers FROM chairs WHERE cid=$cid";
+				$result = $mysqli -> query($command);
+				if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+				$row = $result->fetch_assoc();
+				$nusers = $row['nusers'];
+				$avg = round($row['avg'],2);
+				
+				print "$avg / 10 from $nusers users.";
+				
+				?>
+			</div>
+			
+			
 			
 			<h3>	Rate this chair: <h3>
 			<div id="ratingbar" onmouseleave="resetRate()"  onclick="setRate()">
@@ -180,13 +242,13 @@ if(isset($_POST["dreview"])){
 				<k id="rating"></k>/10
 			</div>
 			
-			<?php print "<form method='post' id='review'  action='chair.php?id=$id'>"; ?>
+			<?php print "<form method='post' id='review'  action='chair.php?id=$cid'>"; ?>
 				<input id="ratingform" name = "ratingtxt" type="text" value="" style = "display:none;">
 				<input type = "submit" name = "rating" value = "Update Rating">
 			</form>
 			
 			<?php
-			$command = "SELECT * FROM crandr WHERE cid = $id AND user = '$user'";
+			$command = "SELECT * FROM crandr WHERE cid = $cid AND user = '$user'";
 			$result = $mysqli -> query($command);
 			if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}			
 			
@@ -205,7 +267,7 @@ SETRATE;
 			?>
 			
 			<?php 
-			$command = "SELECT user,review FROM crandr WHERE cid = $id AND user = '$user';";
+			$command = "SELECT user,review FROM crandr WHERE cid = $cid AND user = '$user';";
 			$result = $mysqli -> query($command);	
 			if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
 			
@@ -213,7 +275,7 @@ SETRATE;
 				print <<<LAR
 					<h3> Leave a review: </h3>
 			
-					<form method="post" id="review"  action="chair.php?id=$id">
+					<form method="post" id="review"  action="chair.php?id=$cid">
 					Review:
 					<br>
 					<input type="text" name="reviewtxt">
@@ -233,7 +295,7 @@ LAR;
 					print <<<LAR
 						<h3> Leave a review: </h3>
 				
-						<form method="post" id="review"  action="chair.php?id=$id">
+						<form method="post" id="review"  action="chair.php?id=$cid">
 						Review:
 						<br>
 						<input type="text" name="reviewtxt">
@@ -258,7 +320,7 @@ LAR;
 						</div>
 						
 						<div id="edit" style = "display:none; margin-top:10px;">
-							<form method="post" id="review"  action="chair.php?id=$id">
+							<form method="post" id="review"  action="chair.php?id=$cid">
 							Review:
 							<br>
 							<input type="text" name="reviewtxt" value = "$review">
@@ -279,7 +341,7 @@ LAR;
 			<p><h4>Reviews</h4></p>
         
 			<?php
-			$command = "SELECT user,review FROM crandr WHERE cid = $id";
+			$command = "SELECT user,review FROM crandr WHERE cid = $cid ORDER BY rid;";
 			$result = $mysqli -> query($command);	
 			if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
 			
