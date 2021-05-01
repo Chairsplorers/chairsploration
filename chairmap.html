@@ -4,6 +4,25 @@
         <title>Chairsploration</title>
         <link rel="stylesheet" href="style.css">
         <link rel="icon" type="image/jpg" href="logo.jpg"/>
+        <script type="text/javascript" src="./maploc.js"></script>
+        <style>
+            #mapspace {
+                width: 75%;
+                height: 100%;
+                margin: 4% 10% 0 10%;
+            }
+
+            #map {
+                height: 100%;
+            }
+
+            /* Optional: Makes the sample page fill the window. */
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+        </style>
     </head>
 
 
@@ -71,17 +90,18 @@
             </div>
         </div>
 
-        <div class="content">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d220447.18526616128!2d-97.89438454109195!3d30.30865500489897!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8644b599a0cc032f%3A0x5d9b464bd469d57a!2sAustin%2C%20TX!5e0!3m2!1sen!2sus!4v1617589365082!5m2!1sen!2sus" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-            <p>Here is a map of chairs around the Austin area. Click on any of the markers to see more information about chairs in your area.</p>
+        <div class="content" id="mapspace">
+            <h3>Chair Map</h3>
+            <div id="map"></div>
             <p>
-                In the future, this map will contain markers, and upon clicking the marker, you will be able to see an image of a chair and a brief description of it.
+                Here is a map of chairs around the Austin area. Click on any of the markers to see more information about chairs in your area.
             </p>
         </div>
 
         <div class="footer">
             <p>&#169; Last updated 04/05/21 by the <a href="mailto:chairsplorers@chairschairschairs.com">Chairsplorers</a>.</p>
         </div>
-
+        <script async defer 
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvUhZL6JsSD78aS2BxW1eodW-AO2uE78U&callback=initMap&libraries=&v=weekly"></script>
     </body>
 </html>
