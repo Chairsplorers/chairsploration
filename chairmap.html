@@ -1,20 +1,43 @@
-<!DOCTYPE html>
 <html>
     <head>
         <title>Chairsploration</title>
         <link rel="stylesheet" href="style.css">
         <link rel="icon" type="image/jpg" href="logo.jpg"/>
+	<script src="./navbar.js"></script>
         <script type="text/javascript" src="./maploc.js"></script>
-        <style>
+	<style>
+	    .mapspaceborder {
+		border: 5px solid;
+		border-color: #473d4f;
+		background-color: #b0a1b9;
+		margin: 2em;
+		background-clip: padding-box;
+	    }
+
             #mapspace {
-                width: 75%;
-                height: 100%;
-                margin: 4% 10% 0 10%;
-            }
+		background-color: #f5dfe6;
+		margin: 2em;
+		padding: 2em;
+            	position: relative;
+		overflow: hidden;
+	    }
+	    #mapspace h1{
+		margin-top: 0;
+		text-align: center;
+		font-family: "Merriweather", "Lato", Helvetica, sans-serif;
+	    }
+	    #mapspace p{
+		text-align: center;
+		margin-bottom: 0;
+	    }
 
             #map {
                 height: 100%;
-            }
+	    }
+	    
+	    .footer {
+	     	position: relative;
+	    }
 
             /* Optional: Makes the sample page fill the window. */
             html, body {
@@ -38,68 +61,22 @@
         </div>
         
         <!--Nav bar w dropdown menus-->
-        <div class="navbar"> 
-            <div class="dropdown">
-                <a href="./reviews.html"><button class="dropbtn">
-                    Reviews
-                </button></a>
-                <div class="dropdown-content">
-                    <a href="./reviews.html">Reviews</a>
-                    <a href="./videos.html">Videos</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="dropbtn">
-                    Superlatives
-                </button>
-                <div class="dropdown-content">
-                    <a href="./art.html">Art</a>
-                    <a href="./leaderboard.html">Leaderboard</a>
-                </div>
-            </div>
-			<div class="dropdown">
-				<a href="./chairmap.html"><button class="dropbtn">
-					Chair Map
-				</button></a>
-			</div>
-            <div class="dropdown">
-                <a href="./contact-us.html"><button class="dropbtn">
-					About Us
-                </button></a>
-                <div class="dropdown-content">
-                    <a href='./contact-us.html'>Contact Us!</a>
-                    <a href='./site-updates.html'>Site Updates</a>
-                </div>
-            </div>
-            <input type = "text" class = "input" style = "margin-left:10px;">
-            <input type = "button" class = "search" value = "search">
-            <!-- probably a form element-->
-            <input type='button' class='button' value='I&#x27m Feeling Lucky!'>
-            <!-- button -->
-            <div class="settings">
-                <button class="hamb">
-                    <div class="ham-image">
-                        <img src="./hamburger.png" alt="hamburger" height="40px">
-                    </div>
-                </button>
-                <div class="dropdown-content">
-                    <a href="./login.php">Login</a>
-                    <a href="./newuser.php">New User</a>
-                    <a href="./settings.html">Settings</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="content" id="mapspace">
-            <h3>Chair Map</h3>
+        <div class="navbar" id="navbar"> </div>
+	
+        <div class="content">
+	    <div class="mapspaceborder">
+	    <div id="mapspace">
+            <h1>Chair Map</h1>
             <div id="map"></div>
             <p>
-                Here is a map of chairs around the Austin area. Click on any of the markers to see more information about chairs in your area.
+                Here is a map of chairs around the Austin area. Click on any of the links in any of the markers to see more information about chairs in your area.
             </p>
-        </div>
+            </div>
+	    </div>
+	</div>
 
         <div class="footer">
-            <p>&#169; Last updated 04/05/21 by the <a href="mailto:chairsplorers@chairschairschairs.com">Chairsplorers</a>.</p>
+            <p>&#169; Last updated 05/02/21 by the <a href="mailto:chairsplorers@chairschairschairs.com">Chairsplorers</a>.</p>
         </div>
         <script async defer 
           src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvUhZL6JsSD78aS2BxW1eodW-AO2uE78U&callback=initMap&libraries=&v=weekly"></script>

@@ -1,13 +1,14 @@
 body {
 	margin: 0px;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: "Open Sans", Helvetica, sans-serif;
+	background-color: #f5f6ff;
 }
 
 .header {
 	background-color: #b0a1b9;
 	display: flex;
 	align-items: center;
-	font-family: "Helvetica";
+	font-family: "Georgia", Helvetica, sans-serif;
 	font-size: 5em;	
 	padding-left: 0.3em;
 	padding-top: 0.1em;
@@ -25,8 +26,7 @@ body {
 
 .ham-image {
     padding: 0.04em;
-	height: 1em;
-	align-items: right;
+    max-height: 1.5em;
     min-height: 40px;
 }
 
@@ -36,192 +36,153 @@ img {
 
 .navbar {
     display:flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+    list-style: none;
     background-color: #b0a1b9;
-	padding-left: 10px;
+	font-family: "Merriweather",Helvetica,sans-serif;
 }
 
 .navbar a {
-    flex: 1 1 auto;
-    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: black;
-    text-decoration: none;
-    text-align: center;
-}
-
-.dropdown {
-    flex: 1 1 auto;
-    overflow: hidden;
-	border: none;
-}
-
-.dropdown .dropbtn {
-    font-size: 16px;  
-	border: none;
-    outline: none;
-    color: black;
-    padding-top: 14px;
-	padding-bottom: 16px;
-    background-color: inherit;
-    font-family: inherit;
-	width: 100%;
-}
-
-.settings .hamb {
-    font-size: 16px;  
-    border: none;	
-    outline: none;
-    color: black;
-    background-color: inherit;
-    font-family: inherit;
-	width: 100%;
-}
-
-.settings:hover .dropdown-content{
-	display: block;
-}
-
-.settings .dropdown-content{
-	right:0;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
+    cursor:pointer;
     background-color: #b0a1b9;
-	text-align: center;
-	z-index: 1;
-}
-
-.dropdown .dropdown-content{
-	min-width: 160px;
-}
-
-  
-.dropdown-content a {
-    float: none;
     color: black;
-    padding: 12px 16px;
     text-decoration: none;
-    display: block;
-    text-align: left;
+    padding: 1em 2em;
+    font-family: "Merriweather", "Lato", Helvetica, sans-serif;
+    font-size: 1em;
+    font-weight: bold;
 }
-  
-.dropdown-content a:hover {
+.navbar a:hover{
+    cursor:pointer;
     background-color: #5253c8;
-    color: #cdbbb6;
+    color: #f5dfe6;
 }
-  
-.dropdown:hover .dropdown-content {
-    display: block;
+.navbar p {
+    margin: 0;
+    padding: 1em 2em;
+    font-family: "Merriweather", "Lato", Helvetica, sans-serif;
+    font-size: 1em;
+    font-weight: bold;
 }
-
-
-.navbar .dropdown:hover .dropbtn:hover{
-	cursor:pointer;
+.navbar p:hover{
+    cursor:pointer;
     background-color: #5253c8;
-    color: #cdbbb6;
+    color: #f5dfe6;
 }
-
-.container-art {
-  width: 60%;
-  margin: 2rem auto; 
+.navbar .dropdown{
+    position: relative;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
 }
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: repeat(8, 5vw);
-  grid-gap: 1.5rem; 
-}
-
-.gallery__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block; 
-}
-
-.gallery__item--1 {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 1;
-  grid-row-end: 3;
-}
-
-.gallery__item--2 {
-  grid-column-start: 3;
-  grid-column-end: 5;
-  grid-row-start: 1;
-  grid-row-end: 3;
-
-}
-
-.gallery__item--3 {
-  grid-column-start: 5;
-  grid-column-end: 9;
-  grid-row-start: 1;
-  grid-row-end: 6;
-
-
-}
-
-.gallery__item--4 {
-  grid-column-start: 1;
-  grid-column-end: 5;
-  grid-row-start: 3;
-  grid-row-end: 6;
-
-
-}
-
-.gallery__item--5 {
-  grid-column-start: 1;
-  grid-column-end: 5;
-  grid-row-start: 6;
-  grid-row-end: 9;
-
-}
-
-.gallery__item--6 {
-  grid-column-start: 5;
-  grid-column-end: 9;
-  grid-row-start: 6;
-  grid-row-end: 9;
-
-}
-
-
-.navbar .input{
+.navbar .settings{
     flex: 0 1 auto;
+    text-align: right;
 }
-
+.navbar .settings .hamb{
+    padding: 0.5em 2em;
+    background-color: #b0a1b9;
+    border: 0;
+}
+.navbar .hamb:hover{
+    cursor: pointer;
+}
+.navbar .settings a{
+    justify-content: flex-end;
+}
+.navbar .searchwithbarandsettings{
+    position: relative;
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.navbar .input{
+    flex: 5 1 auto;
+    height: 1.5em;
+    margin: 0.5em;
+}
 .navbar .search{
     flex: 0 1 auto;
-    background-color:#5253c8;
-    color:#cdbbb6;
-    margin: 10px;
+    font-family: "Open Sans", Helvetica, sans-serif;
+    font-weight: bold;
+    background-color: #f5dfe6;
+    color: black;
+    border: 3px solid;
+    border-color: #473d4f;
+    border-radius: 3em;
+    padding: 0.25em 0.5em;
+    margin: 0.5em;
 }
-
+.navbar .search:hover{
+    cursor:pointer;
+    background-color: #5253c8;
+    color: #f5dfe6;
+}
 .navbar .button{
-    flex: 0 1 auto;
-    background-color:#5253c8;
-    color:#cdbbb6;
-    margin: 10px
+    font-weight: bold;
+    background-color: #f5dfe6;
+    border: 3px solid;
+    border-color: #473d4f;
+    border-radius: 3em;
+    padding: 0.25em 0.5em;
+    margin: 0.5em;
+}
+.navbar .button a{
+    font-family: "Open Sans", Helvetica, sans-serif;
+    background: 0;
+    padding: 0;
+}
+.navbar .button:hover{
+    background-color: #5253c8;
+}
+.navbar .button:hover a{
+    color:#f5dfe6;
+}
+.navbar .dropdown-content a{
+    display: none;
+    position: relative;
+}
+.navbar .dropdown:hover .dropdown-content a{
+    top: 0;
+    display: block;
+    z-index: 1;
+}
+.navbar .settings:hover .dropdown-content a{
+    top: 0;
+    display: block;
+    z-index: 1;
+}
+.navbar .dropdown-content {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.navbar .settings .dropdown-content {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 10em;
+    right: 0;
+}
+.content{
+    margin-right: 2em;
+    margin-left: 2em;
 }
 
-.content{
-    margin-right: 2vw;
-    margin-left: 2vw;
+.button:hover{
+	cursor: pointer;
 }
 
 .footer{
     margin: 0;
     color: black;
-    font-size: 8pt;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Open Sans", Helvetica, sans-serif;
     text-align: center;
 }
 

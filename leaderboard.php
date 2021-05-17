@@ -17,6 +17,7 @@ if ($mysqli->connect_errno) {
         <title>Chairsploration</title>
         <link rel="stylesheet" href="style.css">
         <link rel="icon" type="image/jpg" href="logo.jpg"/>
+		<script src="./navbar.js"></script>
 		
 		<style>
 			.contentheader {
@@ -68,58 +69,8 @@ if ($mysqli->connect_errno) {
         </div>
         
         <!--Nav bar w dropdown menus-->
-        <div class="navbar"> 
-            <div class="dropdown">
-                <a href="./reviews.html"><button class="dropbtn">
-                    Reviews
-                </button></a>
-                <div class="dropdown-content">
-                    <a href="./reviews.html">Reviews</a>
-                    <a href="./videos.html">Videos</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="dropbtn">
-                    Superlatives
-                </button>
-                <div class="dropdown-content">
-                    <a href="./art.html">Art</a>
-                    <a href="./leaderboard.html">Leaderboard</a>
-                </div>
-            </div>
-			<div class="dropdown">
-				<a href="./chairmap.html"><button class="dropbtn">
-					Chair Map
-				</button></a>
-			</div>
-            <div class="dropdown">
-                <a href="./contact-us.html"><button class="dropbtn">
-					About Us
-                </button></a>
-                <div class="dropdown-content">
-                    <a href='./contact-us.html'>Contact Us!</a>
-                    <a href='./site-updates.html'>Site Updates</a>
-                </div>
-            </div>
-            <input type = "text" class = "input" style = "margin-left:10px;">
-            <input type = "button" class = "search" value = "search">
-            <!-- probably a form element-->
-            <input type='button' class='button' value='I&#x27m Feeling Lucky!'>
-            <!-- button -->
-            <div class="settings">
-                <button class="hamb">
-                    <div class="ham-image">
-                        <img src="./hamburger.png" alt="hamburger" height="40px">
-                    </div>
-                </button>
-                <div class="dropdown-content">
-                    <a href="./login.php">Login</a>
-                    <a href="./newuser.php">New User</a>
-                    <a href="./settings.html">Settings</a>
-                </div>
-            </div>
-        </div>
-
+        <div class="navbar" id = "navbar"></div>
+        
         <div class="content">
             <!-- in future add way to resort for different categories-->
 	    <div class="contentheader">
@@ -151,7 +102,7 @@ if ($mysqli->connect_errno) {
 						print <<<ENTRY
 						<tr>
 							<td style = "width:20em;border-right:dashed; border-color: #b0a1b9;">$rank</td>
-							<td style = "width:120em;border-right:dashed; border-color: #b0a1b9;"><a href = "./chairs/chair.php?id=$cid">$name</a></td>
+							<td style = "width:120em;border-right:dashed; border-color: #b0a1b9;"><a href = "./chairs/chair.php?cid=$cid">$name</a></td>
 							<td style = "width:80em;border-right:dashed; border-color: #b0a1b9;">$loc</td>
 							<td style = "width:25em;border-right:dashed; border-color: #b0a1b9;">$avg</td>
 							<td style = "width:25em;">$nusers</td>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Chairsploration</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" type="image/jpg" href="logo.jpg"/>
+		<script src="./navbar.js"></script>
+
+        <style>
+           .subheading {
+               display: flex;
+               flex-direction: column;
+           }
+           .review {
+               flex: 0 1 auto;
+               margin: 1em 0;
+               padding: 1em;
+	       background-color: #f5dfe6;
+	       border: 2em solid;
+	       border-color: #b0a1b9;
+	       display: flex;
+	       flex-direction: column;
+	       justify-content: space-between;
+	   }
+	   .reviewtxt {
+	       flex: 1 1 auto;
+	       margin-right: 1em;
+	       margin-bottom: 1em;
+	       display: flex;
+	       flex-direction: column;
+	       justify-content: flex-start;
+	   }
+	   .review a {
+               color: #5253c8;
+           }
+           .review h2 {
+	       font-family: "Merriweather", "Lato", Helvetica, sans-serif;
+	       flex: 0 1 auto;
+               margin: 0;
+	   }
+	   .review h3 {
+	       font-family: "Merriweather", "Lato", Helvetica, sans-serif;
+	       flex: 1 1 auto;
+	       margin: 0.5em 0;
+	       display: flex;
+	       flex-direction: column;
+	       justify-content: center;
+	   }
+	   .review p {
+	       flex: 1 1 auto;
+	       margin: 0;
+	   }
+           .review img {
+	       flex: 0 1 auto;
+               max-width: 100%;
+               max-height: 18em;
+	   }
+	   .reviewsheading{
+	       margin-top: 2em;
+	       margin-bottom: 1em;
+	       border: 2em solid;
+	       border-color: #b0a1b9;
+	       background-color: #f5dfe6;
+	       padding: 2em;
+	   }
+	   .reviewsheading h1{
+	       font-family: "Merriweather", "Lato", Helvetica, sans-serif;
+	       text-align: center;
+	       margin: 0;
+	   }
+        </style>
+
+    </head>
+
+
+    <body>
+        <!--Title-->
+        <div class="header">
+            <div class = "image">
+                <a href="./mainpage.html"><img src="./logo.jpg" alt="logo"></a>
+            </div>
+            <div class = "text">
+                HAIRSPLORATION
+            </div>
+        </div>
+        
+        <!--Nav bar w dropdown menus-->
+        <div class="navbar" id = "navbar"></div>
+	<div class="content">
+		<div class="subheading">
+			<div class="reviewsheading">
+				<h1> Parks </h1>
+			</div>
+			<div class = "review">
+				<div class="reviewtxt">
+					<h2> <a href="https://austintexas.gov/department/zilker-metropolitan-park"> Zilker Park</a></h2>
+					<p> Zilker Park is one of Austin's biggest parks, spanning a total of 350 
+					acres. Throughout its many trails are some benches where one can rest, and 
+					while resting, admire the beautiful nature, ranging from watching boats 
+					paddle across the colorado river to enjoying the shade under some trees.</p>
+				</div>
+				<div class="reviewtext">
+					<h2><a href="https://austinparks.org/butler-park/">Butler Metro Park</a></h2>
+					<p> If you are looking for a park with more of a city vibe, then this is
+					the park for you. There are many park benches next to a playground, surrounded
+					by both foliage and the downtown Austin skyline.</p>
+				</div>
+			</div>
+		</div>
+		<div class="subheading">
+			<div class="reviewsheading">
+				<h1> Libraries</h1>
+			</div>
+			<div class = "review">
+				<div class="reviewtxt">
+					<h2> <a href="https://www.lib.utexas.edu/about/hours"#>UT Libraries</a></h2>
+					<p> Every single library on the UT Campus is a location filled with many 
+					different types of great chairs. The comfort of all of the chairs is enhanced 
+					by the quiet environment the chairs are situated in, making the library a 
+					natural place for studying and relaxing. Clicking on the above link will allow
+					you to see when each library is open and accessible.</p>
+				</div>
+				<div class="reviewtxt">
+					<h2><a href="https://library.austintexas.gov/central-library">Austin Central Library</a></h2>
+					<p> Outside of UT, there are many well-established libraries as well, such as 
+					the Austin Central Library. Its many windows make the space inside a great 
+					spot to hang out and study.</p>
+				</div>
+				<div class="reviewtxt">
+					<h2><a href="https://littlefreelibrary.org/">Little Free Library</a></h2>
+					<p> The Little Free Library is a nonprofit dedicated to community building and 
+					expanding book access for everyone. In the vicinity of some of the Little Free
+					Library mini bookshelves are some comfortable park benches, and the general 
+					aura is very welcoming.</p>
+				</div>
+			</div>
+		</div>
+		<div class="subheading">
+			<div class="reviewsheading">
+				<h1> Chairs on Campus</h1>
+			</div>
+			<div class="review">
+				<div class="reviewtxt">
+				<h2><a href="https://utdirect.utexas.edu/apps/campus/buildings/nlogon/maps/UTM/GDC/">GDC</a></h2>
+				<p>If you are looking for modern chairs, the Gates Dell Complex has some very sleek 
+				chairs. There is also great ventilation in the indoors space to help create a soothing
+				chill atmosphere perfect for those looking to get away from hot summer days.</p>
+			</div>
+			<div class="reviewtxt">
+				<h2><a href="https://universityunions.utexas.edu/wcp">WCP</a></h2>
+				<p>The WCP is a place for students to study and eat food, conveniently located next to the gym and a few student residence halls. There are many rows of benches outside the building, and they are all nice and spread out.</p>
+			</div>
+			</div>
+		</div>
+	</div>
+        <div class="footer">
+            <p>&#169; Last updated 04/05/21 by the <a href="mailto:chairsplorers@chairschairschairs.com">Chairsplorers</a>.</p>
+        </div>
+
+    </body>
+</html>

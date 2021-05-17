@@ -1,0 +1,287 @@
+.chairinfo {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin-top: 2em;
+}
+.chairimgs {
+	flex-basis: 35%;
+	flex-shrink: 0;
+	max-height: 48em;
+	display: flex;
+	flex-direction:column;
+	justify-content:space-between;
+	min-width: 0;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-left:2em;
+}
+.primchairimg{
+	justify-content: center;
+	flex: 1 0 auto;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 0.5em;
+}
+.primchairimg img {
+	max-width: 100%;
+	max-height: 100%;
+	min-height: 0;
+	object-fit: contain;
+}
+.chaircontent {
+	flex: 1 1 auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	background-color: #f5dfe6;
+	border: 2em solid;
+	border-color: #b0a1b9;
+	padding: 2em;
+}
+.chaircontent h1 {
+	font-family: "Merriweather", "Lato", Helvetica, sans-serif;
+	flex: 0 1 auto;
+	margin-top: 0;
+	margin-bottom: 0.5em;
+}
+.chaircontent h4 {
+	font-family: "Merriweather", "Lato", Helvetica, sans-serif;
+	margin: 0;
+}
+.chaircontent h3 {
+	font-family: "Merriweather", "Lato", Helvetica, sans-serif;
+	margin-bottom: 0.5em;
+}
+.ratings {
+	flex: 0 1 auto;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	width: fit-content;
+}
+.avg {
+	flex: 0 1 auto;
+	margin-right: 1em;
+}
+.starrating {
+	flex: 0 0 auto;
+	margin-right: 1em;
+}
+.star{width:1em}
+.ratingformdiv {
+	flex: 0 2 auto;
+	display: flex;
+	flex-direction:column;
+	justify-content:center;
+}
+.ratings #submitbutton {
+	font-family: "Open Sans", Helvetica, sans-serif;
+	font-weight: bold;
+	border-radius: 3em;
+	background-color: #f5dfe6;
+	color: black;
+	border: 3px solid;
+	border-color: #473d4f;
+	padding: 0.25em;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	margin: 0.5em;
+	min-width: 0;
+	word-wrap: break-word;
+	white-space: normal;
+}
+.ratings #submitbutton:hover{
+	cursor: pointer;
+	background-color: #5253c8;
+	color: #f5dfe6;
+}
+.location{
+	flex: 0 1 auto;
+}
+.description{
+	flex: 1 1 auto;
+}
+#review{
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+}
+#make{
+	flex: 1 1 auto;
+}
+#make #revtext{
+	flex: 1 1 auto;
+	height: 2em;
+}
+#make #submit{
+	font-family: "Open Sans", Helvetica, sans-serif;
+	font-weight: bold;
+	border-radius: 3em;
+	background-color: #f5dfe6;
+	color: black;
+	border: 3px solid;
+	border-color: #473d4f;
+	padding: 0.25em;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	margin: 0.5em;
+}
+#make #submit:hover{
+	cursor: pointer;
+	background-color: #5253c8;
+	color: #f5dfe6;
+}
+#make #tryagaintext{
+	flex: 1 1 auto;
+	height: 2em;
+}
+#make #tryagainsubmit{
+	font-family: "Open Sans", Helvetica, sans-serif;
+	font-weight: bold;
+	border-radius: 3em;
+	background-color: #f5dfe6;
+	color: black;
+	border: 3px solid;
+	border-color: #473d4f;
+	padding: 0.25em;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	margin: 0.5em;
+}
+#make #tryagainsubmit:hover{
+	cursor: pointer;
+	background-color: #5253c8;
+	color: #f5dfe6;
+}
+#yreview{
+	flex: 1 1 auto;
+}
+.yrev{
+	display: flex;
+}
+.yrev .buttondev{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+#yreview #editit{
+	font-family: "Open Sans", Helvetica, sans-serif;
+	font-weight: bold;
+	border-radius: 3em;
+	background-color: #f5dfe6;
+	color: black;
+	border: 3px solid;
+	border-color: #473d4f;
+	padding: 0.25em;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	margin: 0.5em;
+}
+#yreview #editit:hover{
+	cursor: pointer;
+	background-color: #5253c8;
+	color: #f5dfe6;
+}
+#edit{
+	flex: 1 1 auto;
+}
+#edit #reviewtxt{
+	flex: 1 1 auto;
+	height: 2em;
+}
+#edit #update{
+	font-family: "Open Sans", Helvetica, sans-serif;
+	font-weight: bold;
+	border-radius: 3em;
+	background-color: #f5dfe6;
+	color: black;
+	border: 3px solid;
+	border-color: #473d4f;
+	padding: 0.25em;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	margin: 0.5em;
+}
+#edit #update:hover{
+	cursor: pointer;
+	background-color: #5253c8;
+	color: #f5dfe6;
+}
+#edit #delete{
+	font-family: "Open Sans", Helvetica, sans-serif;
+	font-weight: bold;
+	border-radius: 3em;
+	background-color: #f5dfe6;
+	color: black;
+	border: 3px solid;
+	border-color: #473d4f;
+	padding: 0.25em;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	margin: 0.5em;
+}
+#edit #delete:hover{
+	cursor: pointer;
+	background-color: #5253c8;
+	color: #f5dfe6;
+}
+.reviewsheading{
+	margin-top: 2em;
+	margin-bottom: 2em;
+	border: 2em solid;
+	border-color: #b0a1b9;
+	background-color: #f5dfe6;
+	padding: 2em;
+}
+.reviewsheading h1{
+	font-family: "Merriweather", "Lato", Helvetica, sans-serif;
+	text-align: center;
+	margin: 0;
+}
+.dispreview{
+	border: 2em solid;
+	border-color: #b0a1b9;
+	background-color: #f5dfe6;
+	padding: 1em;
+	margin-bottom: 2em;
+}
+.dispreview h2{
+	font-family: "Merriweather", "Lato", Helvetica, sans-serif;
+	margin:0;
+}
+.helpfulness{
+	font-family: "Merriweather", "Lato", Helvetica, sans-serif;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin-top: 2em;
+}
+.revbutton {
+	font-family: "Open Sans", Helvetica, sans-serif;
+	font-weight: bold;
+	border-radius: 3em;
+	background-color: #f5dfe6;
+	color: black;
+	border: 3px solid;
+	border-color: #473d4f;
+	padding: 0.25em;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	margin: 0.5em;
+}
+.revbutton:hover{
+	cursor: pointer;
+	background-color: #5253c8;
+	color: #f5dfe6;
+}
+
+.heart{
+	position: absolute;
+	width: 30px;
+	height: 30px;
+	top: 0px;
+	left: 0px;
+	cursor:pointer;
+}

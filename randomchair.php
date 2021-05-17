@@ -22,5 +22,5 @@ if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
 
 $rcid = $result->fetch_assoc()["cid"];
 
-header ("Location: ./chairs/chair.php?id=$rcid");
+header ("Location: ./chairs/chair.php?cid=$rcid");
 ?>

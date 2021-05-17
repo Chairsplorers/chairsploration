@@ -2,13 +2,13 @@
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 session_start();
-if (!isset($_GET['id'])){
+if (!isset($_GET['cid'])){
 	header("Location: ../mainpage.html");
 }
-$cid = $_GET['id'];
+$cid = $_GET['cid'];
 
 if (!isset ($_COOKIE['username']) || ($_COOKIE["username"] == '')) {
-    $_SESSION['redir'] = "chairs/chair.php?id=$cid";
+    $_SESSION['redir'] = "chairs/chair.php?cid=$cid";
     header ("Location: ../login.php");
 }
 $user = $_COOKIE['username'];
@@ -23,15 +23,14 @@ if ($mysqli->connect_errno) {
 	die('Connect Error: ' . $mysqli->connect_errno .": " . $mysqli->connect_error);
 }
 
-
-
-$command = "SELECT * FROM chairs WHERE cid = $cid";
+$command = sprintf("SELECT * FROM chairs WHERE cid = %s",$mysqli->real_escape_string($cid));
 $result = $mysqli -> query($command);
 if (!$result) {header("Location: ../mainpage.html");}
 
 if ($result->num_rows == 1) {
 	$row = $result->fetch_assoc();
 	$name = $row["name"];
+	$loc = $row['loc'];
 	$description = $row["description"];
 }
 else {
@@ -51,7 +50,7 @@ if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
 
 if ($user != ""){
 	if ($result->num_rows == 0 and (isset($_POST["rating"]) || isset($_POST["review"]))){
-		$command = "INSERT INTO crandr (cid,user,rating,review,rid) VALUES ($cid,'$user',0,'',$nrid);";
+		$command = "INSERT INTO crandr (cid,user,rating,review,rid,revpts) VALUES ($cid,'$user',0,'',$nrid,0);";
 		$result = $mysqli -> query($command);
 		if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
 	}
@@ -113,6 +112,40 @@ if ($user != ""){
 		$result = $mysqli -> query($command);
 		if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
 	}
+	
+	if(isset($_POST["helpful"])){
+		$reviewer = $_POST["helpful"];
+		$command = "SELECT * FROM revrates WHERE cid = $cid AND rater = '$user' AND reviewer = '$reviewer';";
+		$result = $mysqli -> query($command);
+		if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+		
+		if ($result->num_rows == 0){
+			$command = "UPDATE crandr SET revpts = revpts+1 WHERE cid = $cid AND user = '$reviewer';";
+			$result = $mysqli -> query($command);
+			if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+		
+			$command = "INSERT INTO revrates (cid,rater,reviewer) VALUES ($cid,'$user','$reviewer');";
+			$result = $mysqli -> query($command);
+			if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+		}
+	}
+	
+	if(isset($_POST["unhelpful"])){
+		$reviewer = $_POST["unhelpful"];
+		$command = "SELECT * FROM revrates WHERE cid = $cid AND rater = '$user' AND reviewer = '$reviewer';";
+		$result = $mysqli -> query($command);
+		if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+		
+		if ($result->num_rows == 1){
+			$command = "UPDATE crandr SET revpts = revpts-1 WHERE cid = $cid AND user = '$reviewer';";
+			$result = $mysqli -> query($command);
+			if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+		
+			$command = "DELETE FROM revrates WHERE cid=$cid AND rater = '$user' AND reviewer = '$reviewer';";
+			$result = $mysqli -> query($command);
+			if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+		}
+	}
 }
 ?>
 
@@ -122,12 +155,9 @@ if ($user != ""){
         <title>Chairsploration</title>
         <link rel="stylesheet" href="../style.css">
         <link rel="icon" type="image/jpg" href="../logo.jpg"/>
-		<script src="./chairjs.js"></script>
-		<style type = text/css>
-			div.chairimg {width:30%; float:right; margin-right:50px; margin-top:10px;text-align:center;padding:10px;}
-			div.content{height:500px}
-			img.star{width:30px;}
-		</style>
+	<script src="./chairjs.js"></script>
+	<script src="./imgrate.js"></script>
+	<link rel="stylesheet" href="./stylechair.css">
     </head>
 
 
@@ -144,73 +174,76 @@ if ($user != ""){
         
         <!--Nav bar w dropdown menus-->
         <div class="navbar"> 
-            <div class="dropdown">
-                <a href="../reviews.html"><button class="dropbtn">
-                    Reviews
-                </button></a>
-                <div class="dropdown-content">
-                    <a href="../reviews.html">Reviews</a>
-                    <a href="../videos.html">Videos</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="dropbtn">
-                    Superlatives
-                </button>
-                <div class="dropdown-content">
-                    <a href="../art.html">Art</a>
-                    <a href="../leaderboard.html">Leaderboard</a>
-                </div>
-            </div>
 			<div class="dropdown">
-				<a href="../chairmap.html"><button class="dropbtn">
-					Chair Map
-				</button></a>
+				<a href="../images.php">
+					Browse
+				</a>
+				<div class="dropdown-content">
+					<a href="../images.php">Images</a>
+					<a href="../reviews.php">Reviews</a>
+				</div>
 			</div>
-            <div class="dropdown">
-                <a href="../contact-us.html"><button class="dropbtn">
+			<div class="dropdown">
+				<a href="../leaderboard.php">
+					Leaderboard
+				</a>
+			</div>
+			<div class="dropdown">
+				<a href="../chairmap.html">
+					Chair Map
+				</a>
+			</div>
+			<div class="dropdown">
+				<a href="../contact-us.php">
 					About Us
-                </button></a>
-                <div class="dropdown-content">
-                    <a href='../contact-us.html'>Contact Us!</a>
-                    <a href='../site-updates.html'>Site Updates</a>
-                </div>
-            </div>
-            <input type = "text" class = "input" style = "margin-left:10px;">
-            <input type = "button" class = "search" value = "search">
-            <!-- probably a form element-->
-            <input type='button' class='button' value='I&#x27m Feeling Lucky!' onclick = "document.location='../randomchair.php'">
-            <!-- button -->
-            <div class="settings">
-                <button class="hamb">
-                    <div class="ham-image">
-                        <img src="../hamburger.png" alt="hamburger" height="40px">
-                    </div>
-                </button>
-                <div class="dropdown-content">
-                    <a href="../login.php">Login</a>
-                    <a href="../newuser.php">New User</a>
-                    <a href="../settings.html">Settings</a>
-                </div>
-            </div>
+				</a>
+				<div class="dropdown-content">
+					<a href='../contact-us.php'>Contact Us!</a>
+					<a href='../site-updates.html'>Site Updates</a>
+				</div>
+			</div>
+			<div class="searchwithbarandsettings">
+			<input type = "text" class = "input" style = "margin-left:10px;">
+			<input type = "button" class = "search" value = "search">
+			<!-- probably a form element-->
+			<button class = 'button'>
+				<a href= "../randomchair.php">I&#x27m Feeling Lucky!</a>
+			</button>
+			<!-- button -->
+			<div class="settings">
+				<button class="hamb">
+					<div class="ham-image">
+						<img src="../hamburger.png" alt="hamburger" height="40px">
+					</div>
+				</button>
+				<div class="dropdown-content">
+					<?php
+						if(isset($_COOKIE['username'])) {
+							print <<<LOGIN
+							<a href="../logout.php">Logout</a>
+							<a href="../settings.html">Settings</a>
+							<a href="./newchair.php">Add Chair</a>
+LOGIN;
+						}else{
+							print <<<LOGOUT
+							<a href="../login.php">Login</a>
+							<a href="../newuser.php">New User</a>
+							<a href="../settings.html">Settings</a>
+LOGOUT;
+						}
+					?>
+				</div>
+				</div>
+			</div>
         </div>
-
-		<?php echo "<h1 align=\"center\"> $name </h1>"; ?>
-
-		<div class = "chairimg">
-			<?php echo "<img src = '$cid/mainimg.jpg' alt = 'chair' width = 90%></img>"; ?>
-			<p>The chair.</p>
-		</div>
 		
 		<div class="content">
-			<div class = "description">
-				<h3>Description:</h3>
-				
-				<?php echo "<p> $description </p>" ?>
-			</div>
-			
+		<div class="chairinfo">
+		<div class="chaircontent">
+			<?php echo "<h1> $name </h1>"; ?>
+			<div class = "ratings">
 			<div class = "avg">
-				<h3>Average score:</h3>
+				<h4>Average score:</h4>
 				
 				<?php
 				$command = "SELECT avg,nusers FROM chairs WHERE cid=$cid";
@@ -226,8 +259,8 @@ if ($user != ""){
 			</div>
 			
 			
-			
-			<h3>	Rate this chair: <h3>
+			<div class="starrating">	
+			<h4>	Rate this chair: </h4>
 			<div id="ratingbar" onmouseleave="resetRate()"  onclick="setRate()">
 				<img id="1" class = "star" onmouseover="changeRate(1)">
 				<img id="2" class = "star" onmouseover="changeRate(2)">
@@ -241,11 +274,12 @@ if ($user != ""){
 				<img id="10" class = "star" onmouseover="changeRate(10)">
 				<k id="rating"></k>/10
 			</div>
-			
-			<?php print "<form method='post' id='review'  action='chair.php?id=$cid'>"; ?>
+			</div>
+			<?php print "<div class='ratingformdiv'><form method='post' id='review'  action='chair.php?cid=$cid'>"; ?>
 				<input id="ratingform" name = "ratingtxt" type="text" value="" style = "display:none;">
-				<input type = "submit" name = "rating" value = "Update Rating">
+				<input id="submitbutton" type = "submit" name = "rating" value = "Update Rating">
 			</form>
+			</div>
 			
 			<?php
 			$command = "SELECT * FROM crandr WHERE cid = $cid AND user = '$user'";
@@ -265,7 +299,17 @@ SETRATE;
 				}
 			}
 			?>
-			
+			</div>
+			<div class="location">
+				<h3>Location:</h3>
+				<?php echo "<p> $loc </p>" ?>
+			</div>
+			<div class = "description">
+				<h3>Description:</h3>
+				
+				<?php echo "<p> $description </p>" ?>
+			</div>
+
 			<?php 
 			$command = "SELECT user,review FROM crandr WHERE cid = $cid AND user = '$user';";
 			$result = $mysqli -> query($command);	
@@ -273,18 +317,15 @@ SETRATE;
 			
 			if($result->num_rows == 0){
 				print <<<LAR
+					<div id="make">
 					<h3> Leave a review: </h3>
 			
-					<form method="post" id="review"  action="chair.php?id=$cid">
-					Review:
-					<br>
-					<input type="text" name="reviewtxt">
-					<br>
-					<br>
-					<input type="submit" name="review">
-					<br>
+					<form method="post" id="review"  action="chair.php?cid=$cid">
+					<input id="revtext" type="text" name="reviewtxt">
+					<input id="submit" type="submit" name="review">
 					
 					</form>
+					</div>
 LAR;
 			}
 			else{
@@ -293,42 +334,35 @@ LAR;
 				
 				if ($review == ""){
 					print <<<LAR
+						<div id="make">
 						<h3> Leave a review: </h3>
 				
-						<form method="post" id="review"  action="chair.php?id=$cid">
-						Review:
-						<br>
-						<input type="text" name="reviewtxt">
-						<br>
-						<br>
-						<input type="submit" name="review">
-						<br>
+						<form method="post" id="review"  action="chair.php?cid=$cid">
+						<input id="tryagaintext" type="text" name="reviewtxt">
+						<input id="tryagainsubmit" type="submit" name="review">
 						
 						</form>
+						</div>
 LAR;
 				}
 				else{
 					print <<<LAR
-						<h3> Your review: </h3>
 				
 						<div id="yreview">
-							$review
+						<h3> Your review: </h3>
+						<div class="yrev">
+						<p>$review</p>
 							
-							<br><br>
-							
-							<button onclick = "editReview()">Edit</button>
+						<div class="buttondev"><button id="editit" onclick = "editReview()">Edit</button></div>
+						</div>
 						</div>
 						
 						<div id="edit" style = "display:none; margin-top:10px;">
-							<form method="post" id="review"  action="chair.php?id=$cid">
-							Review:
-							<br>
-							<input type="text" name="reviewtxt" value = "$review">
-							<br>
-							<br>
-							<input type="submit" name="review" value = "Update">
-							<input type="submit" name="dreview" value = "Delete">
-							<br>
+							<h3>Review:</h3>
+							<form method="post" id="review"  action="chair.php?cid=$cid">
+							<input id="reviewtxt" type="text" name="reviewtxt" value = "$review">
+							<input id="update" type="submit" name="review" value = "Update">
+							<input id="delete" type="submit" name="dreview" value = "Delete">
 							
 							</form>
 						</div>
@@ -337,26 +371,106 @@ LAR;
 			}
 			
 			?>
-			
-			<p><h4>Reviews</h4></p>
-        
+			</div>
+			 
+			<div class="chairimgs">
+			<?php 
+				$command = "SELECT * FROM cimg WHERE cid = $cid ORDER BY rate DESC, imgid ASC;";
+				$result = $mysqli -> query($command);
+				if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}	
+				
+				if($result->num_rows > 0){
+					$row = $result->fetch_assoc();
+					$imgid = $row['imgid'];
+					$filetype = $row['filetype'];
+					
+					$command2 = "SELECT * FROM imgrates WHERE cid=$cid AND imgid=$imgid AND rater='$user';";
+					$result2 = $mysqli -> query($command2);
+					if (!$result2) {die("Query failed: ($mysqli->error <br> SQL command2= $command2 <br> $img");}
+					
+					$fid = "c$cid"."i$imgid";
+					
+					echo "<div class='primchairimg' ><div style = 'position: relative;'  onmouseover='HdispHeart($cid,$imgid)' onmouseleave='HhideHeart($cid,$imgid)'><img src = '$cid/$fid.$filetype' alt = 'chair'></img>";
+					if ($result2->num_rows == 0){
+						echo "<script>HaddSet($cid,$imgid,0);</script>";
+						echo "<img src='./empheart.png' class = 'heart' id='$fid' onmouseover='HchangeRate($cid,$imgid)' onmouseleave='HresetRate($cid,$imgid)' onclick = 'HtoggleSet($cid,$imgid)' style = 'visibility:hidden;'>";
+					}
+					else{
+						echo "<script>HaddSet($cid,$imgid,1);</script>";
+						echo "<img src='./fullheart.png' class = 'heart' id='$fid' onmouseover='HchangeRate($cid,$imgid)' onmouseleave='HresetRate($cid,$imgid)' onclick = 'HtoggleSet($cid,$imgid)' style = 'visibility:visible;'>";
+					}
+					echo "</div></div>";
+					
+					if($result->num_rows > 1){
+						$img = 0;
+						while($row = $result->fetch_assoc() and $img < 4 ){
+							$imgid = $row['imgid'];
+							$filetype = $row['filetype'];
+							echo "<div class='primchairimg'><div style='position:relative;' onmouseover='HdispHeart($cid,$imgid)' onmouseleave='HhideHeart($cid,$imgid)'><img src = '$cid/c$cid"."i$imgid.$filetype' alt = 'chair' min-height= 0px;></img>";
+							
+							$command2 = "SELECT * FROM imgrates WHERE cid=$cid AND imgid=$imgid AND rater='$user';";
+							$result2 = $mysqli -> query($command2);
+							if (!$result2) {die("Query failed: ($mysqli->error <br> SQL command2= $command2 <br> $img");}
+							
+							$fid = "c$cid"."i$imgid";
+							
+							if ($result2->num_rows == 0){
+								echo "<script>HaddSet($cid,$imgid,0);</script>";
+								echo "<img src='./empheart.png' class = 'heart' id='$fid' onmouseover='HchangeRate($cid,$imgid)' onmouseleave='HresetRate($cid,$imgid)' onclick = 'HtoggleSet($cid,$imgid)' style = 'visibility:hidden;'>";
+							}
+							else{
+								echo "<script>HaddSet($cid,$imgid,1);</script>";
+								echo "<img src='./fullheart.png' class = 'heart' id='$fid' onmouseover='HchangeRate($cid,$imgid)' onmouseleave='HresetRate($cid,$imgid)' onclick = 'HtoggleSet($cid,$imgid)' style = 'visibility:visible;'>";
+							}
+							echo "</div></div>";	
+							$img = $img+1;
+					}
+					}}
+			?>
+			</div>
+			</div>
+
+			<div class="reviewsheading">
+			<h1>Reviews</h1>
+        		</div>
 			<?php
-			$command = "SELECT user,review FROM crandr WHERE cid = $cid ORDER BY rid;";
+			$command = "SELECT * FROM crandr WHERE cid = $cid ORDER BY revpts DESC, rid;";
 			$result = $mysqli -> query($command);	
 			if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
 			
 			if ($result->num_rows > 0){
 				while($row = $result->fetch_assoc()) {
-					$user = $row['user'];
+					$reviewer = $row['user'];
 					$review = $row['review'];
+					$revpts = $row['revpts'];
+					$rating = $row['rating'];
 					if ($review != ""){
-						echo "<div class = 'review' style = 'margin-top: 10px;'>$user <br><br> $review</div>\n";
+						echo "<div class = 'dispreview' style = 'margin-top: 10px;'> <h2>$reviewer</h2>";
+
+						if($rating>0){
+							echo "<p><b>Score:</b> $rating/10</p>";
+						}
+
+						echo "<p>$review</p><div class = 'helpfulness'> <div class = 'reviewscore'>$revpts people have found this review helpful.</div>";
+						
+						if($reviewer != $user){
+							$command = "SELECT * FROM revrates WHERE cid = $cid AND reviewer = '$reviewer' AND rater = '$user';";
+							$resultrev = $mysqli -> query($command);	
+							if (!$resultrev) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+							
+							if($resultrev -> num_rows == 0){
+								echo "<form method='post' id='helpful' class = 'revbuttonform' action='chair.php?cid=$cid'><button name='helpful' class = 'revbutton' value='$reviewer'>Mark as helpful</button></form> ";
+							}
+							else{
+								echo "<form method='post' id='unhelpful' class = 'revbuttonform' action='chair.php?cid=$cid'><button name='unhelpful' value='$reviewer' class = 'revbutton'>Unmark as helpful</button></form> ";
+							}
+						}
+						echo "</div></div>";
 					}
 				}
 			}
-			?>
-		
-        </div>
+?>
+	</div>
 
         <div class="footer" >
             <p>&#169; Last updated 04/05/21 by the <a href="mailto:chairsplorers@chairschairschairs.com">Chairsplorers</a>.</p>

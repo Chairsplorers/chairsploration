@@ -4,6 +4,7 @@
         <title>Chairsploration</title>
         <link rel="stylesheet" href="style.css">
         <link rel="icon" type="image/jpg" href="logo.jpg"/>
+		<script src="./navbar.js"></script>
 	<style>
 	.contentsectionborder {
 		border: 5px solid;
@@ -47,6 +48,8 @@
 	}
 	
 	.explorerow button {
+		font-family: "Merriweather", "Lato", Helvetica, sans-serif;
+		font-weight: bold;
 		border: 5px solid;
 		border-color: #473d4f;
 		background-color: #f5dfe6;
@@ -57,6 +60,12 @@
 		color: black;
 		font-size: 2em;
 		padding: 1em;
+	}
+	.click:hover{
+		background-color: #5253c8;
+	}
+	.click:hover a{
+		color: #f5dfe6;
 	}
 	</style>
     </head>
@@ -74,78 +83,29 @@
         </div>
         
         <!--Nav bar w dropdown menus-->
-        <div class="navbar"> 
-            <div class="dropdown">
-                <a href="./reviews.php"><button class="dropbtn">
-                    Reviews
-                </button></a>
-                <div class="dropdown-content">
-                    <a href="./reviews.html">Reviews</a>
-                    <a href="./videos.html">Videos</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="dropbtn">
-                    Superlatives
-                </button>
-                <div class="dropdown-content">
-                    <a href="./art.html">Art</a>
-                    <a href="./leaderboard.html">Leaderboard</a>
-                </div>
-            </div>
-			<div class="dropdown">
-				<a href="./chairmap.html"><button class="dropbtn">
-					Chair Map
-				</button></a>
-			</div>
-            <div class="dropdown">
-                <a href="./contact-us.html"><button class="dropbtn">
-					About Us
-                </button></a>
-                <div class="dropdown-content">
-                    <a href='./contact-us.html'>Contact Us!</a>
-                    <a href='./site-updates.html'>Site Updates</a>
-                </div>
-            </div>
-            <input type = "text" class = "input" style = "margin-left:10px;">
-            <input type = "button" class = "search" value = "search">
-            <!-- probably a form element-->
-            <input type='button' class='button' value='I&#x27m Feeling Lucky!'>
-            <!-- button -->
-            <div class="settings">
-                <button class="hamb">
-                    <div class="ham-image">
-                        <img src="./hamburger.png" alt="hamburger" height="40px">
-                    </div>
-                </button>
-                <div class="dropdown-content">
-                    <a href="./login.php">Login</a>
-                    <a href="./newuser.php">New User</a>
-                    <a href="./settings.html">Settings</a>
-                </div>
-            </div>
-        </div>
+        <div class="navbar" id="navbar"></div>
+		
         <!--Intro/welcome page-->
         <div class="content">
 		
 	    <div class = "contentsectionborder"><div class="contentsection">
-	    <h1 style = "font-size:50px;"> Welcome to Chairsploration! </h1>
-            <p style = "font-size:20px;">
+	    <h1 style = "font-size:3em;"> Welcome to Chairsploration! </h1>
+            <p style = "font-size:2em;">
 Hello, fellow sitting apparatus connoisseur! We know that in your many years of life you&#x27ve sat your behind in plenty of chairs and you&#x27ve looked for a lot of chairs: quiet chairs to work, comfy chairs to relax, and outdoor chairs to enjoy some fresh air. We&#x27re here to nab all of your sitting expertise and to help you optimize your chair experience.
             </p>
 	    </div></div>
 	    <div class="explorerow">
-		    <button>
+		    <button class="click">
 <a href="./chairmap.html">Interactive Map</a>
 		    </button>
-		    <button>
-<a href="./reviews.html">Chair Reviews</a>
+		    <button class="click">
+<a href="./reviews.php">Chair Reviews</a>
 		    </button>
-		    <button>
-			    <a href="#">Random Chair</a>
+		    <button class="click">
+			    <a href="./randomchair.php">Random Chair</a>
 		    </button>
-			<button>
-			    <a href="#">Contact Us</a>
+		    <button class="click">
+			    <a href="./contact-us.php">Contact Us</a>
 		    </button>
 	    </div>
         </div>

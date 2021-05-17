@@ -1,46 +1,9 @@
 <?php
 
 session_start();
-$page = $_SESSION["redir"];
 
 error_reporting(E_ALL);
-ini_set("display_errors", "on");
-
-$message = "";
-
-
-$login_file = file("passwd.txt", FILE_IGNORE_NEW_LINES);
-$login_data = array();
-
-foreach ($login_file as $line) {
-    $line_arr = explode(":", $line);
-    $login_data[$line_arr[0]] = $line_arr[1];
-}
-
-
-if (isset($_POST["submit"])){
-    if (!(isset($_COOKIE["username"])) || ($_COOKIE["username"] == '')) {
-        if (isset($_POST['nusername']) && isset($_POST['npassword']) && !empty($_POST['nusername']) && !empty($_POST['npassword'])){
-            $nun = $_POST["nusername"];
-            $npw = $_POST["npassword"];
-            if (array_key_exists($nun, $login_data)) {
-                $message = "$nun has been taken. Please try to enter a different username.";
-            } else{
-                $file = fopen ("passwd.txt", "a");
-                fwrite ($file, "$nun:$npw\n");
-                fclose ($file);
-                $time = 120;
-                setcookie('username', $nun, time()+$time);
-                $message = "Registration complete! Redirecting to your page...";
-                header("Refresh:1; url=$page");
-            }
-        } else{
-            $message = "Please Enter all Credentials";
-        } 
-
-    }
-}
-    
+ini_set("display_errors", "on");    
 
 ?>
 
@@ -50,42 +13,76 @@ if (isset($_POST["submit"])){
         <title>Chairsploration</title>
         <link rel="stylesheet" href="style.css">
         <link rel="icon" type="image/jpg" href="logo.jpg"/>
+		<script src="./navbar.js"></script>
 		
 		<style>
-			body {
+			.newuser-info-border{
+				width: fit-content;
+				max-width: 40%;
+				border: 5px solid;
+				border-color: #473d4f;
 				background-color: #b0a1b9;
+				margin: 2em auto;
+				background-clip: padding-box;
 			}
-		
-			div.newuser-info{
-				margin-top: 30px;
-				margin-bottom: 30px;
+			.newuser-info{
+				margin: 2em;
 				text-align: center;
-				background-color: #cdbbb6;
-				width: 30%;
-				margin-left: auto;
-				margin-right: auto;
-				padding: 20px;
-				border-style: solid;
+				background-color: #f5dfe6;
+				padding: 2em;
+				padding-bottom: 1em;
 			}
-		
-			table{
-				margin-left: auto;
-				margin-right: auto;
+			.newuser-info h2{
+				margin-top: 0;
+				font-family: "Merriweather", "Lato", Helvetica, sans-serif;
 			}
-		
-			tr.spacing{
-				height: 10px;
+			#information{
+				display: flex;
+				flex-direction: column;
+				align-content: center;
+				justify-content: center;
 			}
-		
-			td {
-				font-family: "Times New Roman", serif;
-				font-size: 14pt;
-				position: center;
+			.info{
+				font-family: "Merriweather", "Lato", Helvetica, sans-serif;
 				text-align: center;
+				margin: 0 auto;
 			}
-			
-			tiny {
-				font-size:8pt;
+			.info tr{
+				display: flex;
+				flex-direction: row;
+				justify-content: space-around;
+				margin-bottom: 0.5em;
+			}
+		
+			.info td {
+				font-size: 1.1em;
+				font-weight: bold;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+			}
+			.info .textbox{
+				flex: 0 1 auto;
+				min-height: 1em;
+				margin: 0 0.5em;
+			}
+			.info .button{
+				font-family: "Open Sans", Helvetica, sans-serif;
+				font-weight: bold;
+				font-size: 0.85em;
+				padding: 0.25em 0.5em;
+				background-color: #f5dfe6;
+				color: black;
+				border: 3px solid;
+				border-color: #473d4f;
+				border-radius: 3em;
+			}
+			.info .button:hover{
+				background-color: #5253c8;
+				color: #f5dfe6;
+			}
+			.tiny {
+				font-size:0.75em;
 			}
 		</style>
     </head>
@@ -103,114 +100,99 @@ if (isset($_POST["submit"])){
         </div>
         
         <!--Nav bar w dropdown menus-->
-        <div class="navbar"> 
-            <div class="dropdown">
-                <a href="./reviews.html"><button class="dropbtn">
-                    Reviews
-                </button></a>
-                <div class="dropdown-content">
-                    <a href="./reviews.php">Reviews</a>
-                    <a href="./videos.html">Videos</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <a href="./superlatives.html"><button class="dropbtn">
-                    Superlatives
-                </button></a>
-                <div class="dropdown-content">
-                    <a href="./art.html">Art</a>
-                    <a href="./leaderboard.html">Leaderboard</a>
-                </div>
-            </div>
-			<div class="dropdown">
-				<a href="./chairmap.html"><button class="dropbtn">
-					Chair Map
-				</button></a>
-			</div>
-            <div class="dropdown">
-                <a href="./contact-us.html"><button class="dropbtn">
-					About Us
-                </button></a>
-                <div class="dropdown-content">
-                    <a href='./contact-us.html'>Contact Us!</a>
-                    <a href='./site-updates.html'>Site Updates</a>
-                </div>
-            </div>
-            <input type = "text" class = "input" style = "margin-left:10px;">
-            <input type = "button" class = "search" value = "search">
-            <!-- probably a form element-->
-            <input type='button' class='button' value='I&#x27m Feeling Lucky!'>
-            <!-- button -->
-            <div class="settings">
-                <button class="hamb">
-                    <div class="ham-image">
-                        <img src="./hamburger.png" alt="hamburger" height="40px">
-                    </div>
-                </button>
-                <div class="dropdown-content">
-                    <a href="./login.php">Login</a>
-                    <a href="./newuser.php">New User</a>
-                    <a href="./settings.html">Settings</a>
-                </div>
-            </div>
-        </div>
+        <div class="navbar" id = "navbar"></div>
 
-        <script type = "text/javascript" src="verify.js"></script>
+        <script language = "javascript" type = "text/javascript">
+            function ajaxFunction(){
+                var first    = document.getElementById('first').value;
+                var last     = document.getElementById('last').value;
+                var email    = document.getElementById('email').value;
+                var username = document.getElementById('nusername').value;
+                var password = document.getElementById('npassword').value;
+                var repasswd = document.getElementById('rpassword').value;
+    
+                if (!username.match(/^[0-9a-zA-Z]+$/) || username.length > 20){
+                    document.getElementById('ajaxDiv').innerHTML = "Please enter an alphanumeric username between 1-20 characters long.";
+                }
+                else if (!password.match(/^[0-9a-zA-Z]+$/) || password.length > 20 || password.length < 7){
+                    document.getElementById('ajaxDiv').innerHTML = "Please enter an alphanumeric password between 7-20 characters long.";
+                }
+                else if (!email.includes("@")){
+                    document.getElementById('ajaxDiv').innerHTML = "Please enter a valid email address";
+                }
+                else if (password != repasswd){
+                    document.getElementById('ajaxDiv').innerHTML = "Passwords do not match.";
+                }
+                else{
+                    var ajaxRequest;
+                    ajaxRequest = new XMLHttpRequest();
+                    ajaxRequest.onreadystatechange = function(){
+                        if(ajaxRequest.readyState == 4){
+                            var ajaxDisplay = document.getElementById('ajaxDiv');
+                            if (ajaxRequest.responseText.includes(".php") || ajaxRequest.responseText.includes(".html")){
+                                window.location.href = ajaxRequest.responseText;
+                            } else{
+                                ajaxDisplay.innerHTML = ajaxRequest.responseText;
+                            }
+                        }
+                    }
+                }
+                
+                var queryString = "?user=" + username + "&pass=" + password + "&first=" + first + "&last=" + last + "&email=" + email;
 
-        <div class ='newuser-info'>
+                ajaxRequest.open("GET", "newupdate.php" + queryString, true);
+                ajaxRequest.send(null);
+                
+
+            }
+
+        </script>
+
+	<div class="newuser-info-border">
+	<div class ='newuser-info'>
+	    <h2> Please Register to Continue Using Our Website </h2>
             <form name = 'information' id = 'information' method="post" action="newuser.php">
-                <table>
+                <table class="info">
     
                     <tr>
                         <td>
-                            Full Name:    
-                            <td>
-                                <input type = 'text' name = 'fullname'/>
+                            First Name:    
+                        </td>
+                            <td style="flex: 1 1 auto;">
+                                <input type = 'text' class="textbox" name = 'first' id="first"/>
 
                             </td>                    
 
-                        </td>
                     </tr>
+
                     <tr>
                         <td>
-                            Country:
-                            <td>
-                                <input type = 'text' name = 'country' />
+                            Last Name:    
+                        </td>
+                            <td style="flex: 1 1 auto;">
+                                <input type = 'text' class="textbox" name = 'last' id="last"/>
 
                             </td>                    
 
-                        </td>
                     </tr>
-                    <tr>
-                        <td>
-                            Mobile Number:    
-                            <td>
-                                <input type = 'text' name = 'number' />
 
-                            </td>                    
-
-                        </td>
-                    </tr>
                     <tr>
                         <td>
                             E-mail:   
-                            <td>
-                                <input type = 'text' name = 'email' />
+                        </td>
+                            <td style="flex: 1 1 auto;">
+                                <input type = 'text' class="textbox" name = 'email' id="email"/>
 
                             </td>                    
 
-                        </td>
                     </tr>
-
-    
-    
     
                     <tr>
                         <td>
                             Username:
                         </td>
-                        <td>
-                            <input type = 'text' name = 'nusername'/>
+                        <td style="flex: 1 1 auto;">
+                            <input type = 'text' class="textbox" name = 'nusername' id="nusername"/>
                         </td>
                     </tr>
     
@@ -218,8 +200,8 @@ if (isset($_POST["submit"])){
                         <td>
                             Password:
                         </td>
-                        <td>
-                            <input type = 'password' name = 'npassword'/>
+                        <td style="flex: 1 1 auto;">
+                            <input type = 'password' class="textbox" name = 'npassword' id="npassword"/>
                         </td>
                     </tr>
     
@@ -227,31 +209,26 @@ if (isset($_POST["submit"])){
                         <td>
                             Repeat Password:
                         </td>
-                        <td>
-                            <input type = 'password' name = 'repass'/>
+                        <td style="flex: 1 1 auto;">
+                            <input type = 'password' class="textbox" name = 'rpassword' id="rpassword"/>
                         </td>
                     </tr>
-    
-                </table>
-				
-				<br>
-				
-				<table>
 					<tr>
                         <td>
-                            <input type = "submit" name = "submit" class = 'button' value = 'Submit'/>
+                            <input type = "button" class="button" name = "submit" class = 'button' onclick="ajaxFunction()" value = 'Submit'/>
                         </td>
                         <td>
-                            <input type = 'reset' value ='Clear'/>
+                            <input type = 'reset' class="button" value ='Clear'/>
                         </td>
                     </tr>
 				</table>
             </form>
 
-            <?php echo $message ?><br>
+            <div id = 'ajaxDiv'></div>
 				
-			<tiny>Already have an account? <a href="login.php">Login</a> instead.</tiny>
-        </div>
+			<div class="tiny">Already have an account? <a href="login.php">Login</a> instead.</div>
+	</div>
+	</div>
 
 
         <div class="footer">

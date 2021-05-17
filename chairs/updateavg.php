@@ -22,8 +22,6 @@ while($row = $result->fetch_assoc()) {
 	
 	$nusers = $result2->num_rows;
 	
-	
-	
 	$command3 = "SELECT SUM(rating) FROM crandr WHERE cid=$cid";
 	$result3 = $mysqli -> query($command3);
 	if (!$result3) {die("Query failed: ($mysqli->error <br> SQL command= $command3");}
@@ -42,5 +40,39 @@ while($row = $result->fetch_assoc()) {
 	$result3 = $mysqli -> query($command3);
 	if (!$result3) {die("Query failed: ($mysqli->error <br> SQL command= $command3");}
 }
+
+$command = "UPDATE crandr SET revpts = 0;";
+$result = $mysqli -> query($command);
+if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+
+$command = "SELECT * FROM revrates;";
+$result = $mysqli -> query($command);
+if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+
+while ($row = $result->fetch_assoc()){
+	$cid = $row['cid'];
+	$reviewer = $row['reviewer'];
+	$command2 = "UPDATE crandr SET revpts = revpts+1 WHERE cid = $cid AND user = '$reviewer';";
+	$result2 = $mysqli->query($command2);
+	if (!$result2) {die("Query failed: ($mysqli->error <br> SQL command= $command2");}
+}
+
+$command = "UPDATE cimg SET rate = 0;";
+$result = $mysqli -> query($command);
+if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+
+$command = "SELECT * FROM imgrates;";
+$result = $mysqli -> query($command);
+if (!$result) {die("Query failed: ($mysqli->error <br> SQL command= $command");}
+
+while ($row = $result->fetch_assoc()){
+	$cid = $row['cid'];
+	$imgid = $row['imgid'];
+	$command2 = "UPDATE cimg SET rate = rate+1 WHERE cid = $cid AND imgid = '$imgid';";
+	$result2 = $mysqli->query($command2);
+	if (!$result2) {die("Query failed: ($mysqli->error <br> SQL command= $command2");}
+}
+
+
 
 ?>
